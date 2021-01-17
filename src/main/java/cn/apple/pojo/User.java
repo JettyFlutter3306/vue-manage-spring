@@ -18,6 +18,8 @@ public class User {
     @NotBlank(message="用户名不能为空")
     private String username;
 
+    private String password;
+
     @Pattern(regexp = "^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.[a-zA-Z0-9_-])")
     private String email;
 
@@ -26,7 +28,7 @@ public class User {
 
     private String roleName;  //角色名称
 
-    private int status; //用户状态,默认1
+    private Integer status; //用户状态,默认1
 
     @TableField(fill = FieldFill.INSERT)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

@@ -4,11 +4,13 @@ import cn.apple.common.Constant;
 import cn.apple.common.ResultInfo;
 import cn.apple.pojo.User;
 import cn.apple.service.UserService;
+import cn.apple.util.JwtUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -79,6 +81,66 @@ public class UserController {
 
         return ResultInfo.serverError(Constant.SYSTEM_ERROR);
     }
+
+    @PutMapping("/{id}")
+    public ResultInfo editUserInfo(@PathVariable("id") Integer id,
+                                   @RequestParam("email") String email,
+                                   @RequestParam("mobile") String mobile){
+        User user = new User();
+        user.setId(id);
+        user.setEmail(email);
+        user.setMobile(mobile);
+
+        boolean b = userService.editUserInfoById(user);
+
+        if(b){
+            return ResultInfo.ok(Constant.UPDATE_USER_SUCCESS);
+        }
+
+        return ResultInfo.serverError(Constant.SYSTEM_ERROR);
+    }
+
+    /**
+     * .模糊查询
+     * @param keyword   关键字
+     * @param pageNum   当前页码
+     * @param pageSize  页面大小
+     */
+    @GetMapping("/fuzzySearch")
+    public ResultInfo fuzzySearch(@RequestParam("query") String keyword,
+                                  @RequestParam("pageNum") Integer pageNum,
+                                  @RequestParam("pageSize") Integer pageSize){
+
+        Page<User> page = userService.fuzzySearchUsers(keyword, pageNum, pageSize);
+
+        if(page != null){
+            return ResultInfo.ok(Constant.SELECT_FAILED,page);
+        }
+
+        return ResultInfo.notFound(Constant.SYSTEM_ERROR);
+    }
+
+
+    @PostMapping("/login")
+    public ResultInfo login(@RequestParam("username") String username,
+                            @RequestParam("password") String password){
+
+        boolean b = userService.checkLogin(username, password);
+
+        if(b){
+            Map<String,String> map = new HashMap<>();
+            map.put("username",username);
+            map.put("password",password);
+
+            String token = JwtUtils.getToken(map);
+
+            return ResultInfo.ok(Constant.LOGIN_SUCCESS,token);
+        }
+
+        return ResultInfo.notFound(Constant.LOGIN_FAILED);
+    }
+
+
 
 
 

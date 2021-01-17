@@ -88,6 +88,17 @@ public class ResultInfo{
         return resultInfo;
     }
 
+    public static ResultInfo forbidden(){
+
+        ResultInfo resultInfo = new ResultInfo(false);
+
+        resultInfo.setCode(StatusCode.FORBIDDEN.code);
+
+        return resultInfo;
+    }
+
+
+
     enum StatusCode{
 
         SUCCESS(200),
