@@ -26,7 +26,7 @@ public class JwtUtils {
 
         Calendar calendar = Calendar.getInstance();
 
-        calendar.add(Calendar.DATE,7); //七天过期
+        calendar.add(Calendar.MINUTE,30); //三十分钟过期
 
         builder.withExpiresAt(calendar.getTime());
 

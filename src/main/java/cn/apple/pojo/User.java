@@ -3,12 +3,14 @@ package cn.apple.pojo;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
 @TableName("tb_user")
 public class User {
 

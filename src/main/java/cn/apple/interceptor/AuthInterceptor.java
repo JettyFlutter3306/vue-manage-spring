@@ -19,7 +19,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         //获取请求头中的token信息
-        String token = request.getHeader("token");
+        String token = request.getHeader("AUTH_TOKEN");
 
         ResultInfo resultInfo = new ResultInfo();
 
