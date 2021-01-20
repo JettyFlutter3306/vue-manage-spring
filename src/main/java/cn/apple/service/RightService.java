@@ -7,8 +7,9 @@ import cn.apple.pojo.Role;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,23 +44,28 @@ public class RightService {
 
         String rightIdStr = role.getRightIds();
 
-        //将字符串转为整形数组,即使权限编号数组
-        List<Integer> rightIds = Stream.of(rightIdStr.split(",")).map(Integer::valueOf).collect(Collectors.toList());
+        if(!StringUtils.isEmpty(rightIdStr)){
+            //将字符串转为整形数组,即使权限编号数组
+            List<Integer> rightIds = Stream.of(rightIdStr.split(",")).map(Integer::valueOf).collect(Collectors.toList());
 
-        List<Right> rightList = rightMapper.selectBatchIds(rightIds);
+            List<Right> rightList = rightMapper.selectBatchIds(rightIds);
 
-        Map<Integer,Right> map = new HashMap<>();
+            Map<Integer,Right> map = new HashMap<>();
 
-        //先放置一级菜单
-        rightList.forEach(r -> map.put(r.getId(),r));
+            //先放置一级菜单
+            rightList.forEach(r -> map.put(r.getId(),r));
 
-        for (Right right : rightList) {
-            if(map.containsKey(right.getParentId())){
-                map.get(right.getParentId()).getChildren().add(right);
+            for (Right right : rightList) {
+                if(map.containsKey(right.getParentId())){
+                    map.get(right.getParentId()).getChildren().add(right);
+                }
             }
+
+            return rightList.stream().filter(s -> s.getParentId() == 0).collect(Collectors.toList());
         }
 
-        return rightList.stream().filter(s -> s.getParentId() == 0).collect(Collectors.toList());
+        //不能返回空值,否则前端递归遍历树形权限不好处理
+        return new ArrayList<>();
     }
 
     //获取菜单列表
@@ -71,9 +77,7 @@ public class RightService {
 
         //先放置一级菜单
         rightList.forEach(r -> {
-            if(r.getParentId() == 0){
-                map.put(r.getId(),r);
-            }
+            map.put(r.getId(),r);
         });
 
         //处理二级菜单

@@ -27,10 +27,10 @@ public class Role {
     private String roleDesc; //角色描述
 
     @TableField(exist = false)
-    private List<Right> rightList = new ArrayList<>(); //权限编号列表
+    private List<Right> children = new ArrayList<>(); //权限编号列表
 
     @TableField(exist = false)
-    private List<String> rightUrlList = new ArrayList<>(); //操作路径列表
+    private List<String> rightUrlList; //操作路径列表
 
 
 
