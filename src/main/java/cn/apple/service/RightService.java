@@ -90,4 +90,53 @@ public class RightService {
         //过滤操作,父节点Id为0留下
         return rightList.stream().filter(s -> s.getParentId() == 0).collect(Collectors.toList());
     }
+
+    /**
+     * 根据权限Id获取它的下级权限Id列表
+     * @param rightId           需要查询的权限Id
+     * @param childRightList    子节点的Id集合
+     * @param rightIdList       用来对照的权限对象的Id和parentId
+     * @return                  返回所有子节点的Id集合
+     */
+    public List<Integer> getCascadeListByRightId(Integer rightId,List<Integer> childRightList,List<Right> rightIdList){
+
+        if(!childRightList.contains(rightId)){
+            childRightList.add(rightId);
+        }
+
+        for (Right right : rightIdList) {
+            if(right.getParentId().equals(rightId)){
+                childRightList.add(right.getId());
+
+                if(this.childIdIsExist(right.getId(),rightIdList)){
+                    //递归查询,childRightList负责收集子节点的id,rightIdList负责对照
+                    getCascadeListByRightId(right.getId(),childRightList,rightIdList);
+                }
+            }
+        }
+
+        return childRightList;
+    }
+
+    //查询权限Id和ParentId列表
+    public List<Right> getRightIdAndPIdList(){
+
+        QueryWrapper<Right> wrapper = new QueryWrapper<>();
+
+        wrapper.select("id","parent_id");
+
+        return rightMapper.selectList(wrapper);
+    }
+
+    //查询是否子节点Id
+    private boolean childIdIsExist(Integer rightId,List<Right> rightIdList){
+
+        for (Right right : rightIdList) {
+            if(rightId.equals(right.getParentId())){
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

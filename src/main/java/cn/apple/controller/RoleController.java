@@ -8,10 +8,7 @@ import cn.apple.service.RightService;
 import cn.apple.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +21,17 @@ public class RoleController {
 
     @Autowired
     private RoleService roleService;
+
+    /**
+     * 获取角色名称及id
+     */
+    @GetMapping("/roleName")
+    public ResultInfo getRoleNameList(){
+
+        List<Role> roleList = roleService.getRoleNameListAndId();
+
+        return ResultInfo.ok(Constant.SELECT_SUCCESS,roleList);
+    }
 
     /**
      * 获取角色列表
@@ -39,8 +47,6 @@ public class RoleController {
 
         for (Role role : roleList) {
             role.setChildren(rightService.getRightListAsTree(role.getRoleId()));
-
-            System.out.println(role);
         }
 
         return ResultInfo.ok(Constant.SELECT_SUCCESS,roleList);
@@ -57,6 +63,36 @@ public class RoleController {
 
         return ResultInfo.ok(Constant.SELECT_SUCCESS,list);
     }
+
+    @DeleteMapping("/{rightId}")
+    public ResultInfo deleteRightById(@PathVariable("rightId") Integer rightId,
+                                      @RequestParam("roleId") Integer roleId){
+
+        boolean b = roleService.deleteRightById(roleId, rightId);
+
+        if(b){
+            List<Right> rightTreeList = rightService.getRightListAsTree(roleId);
+
+            return ResultInfo.ok(Constant.DELETE_SUCCESS,rightTreeList);
+        }
+
+        return ResultInfo.serverError(Constant.DELETE_FAILED);
+    }
+
+    @PostMapping("/{roleId}")
+    public ResultInfo updateRightsByRoleId(@PathVariable("roleId") Integer roleId,
+                                           @RequestParam("rids") String rids){
+
+        boolean b = roleService.updateRightsByRoleId(roleId, rids);
+
+        if(b){
+            return ResultInfo.ok(Constant.ALLOT_RIGHTS_SUCCESS);
+        }
+
+        return ResultInfo.serverError(Constant.ALLOT_RIGHTS_FAILED);
+    }
+
+
 
 
 }

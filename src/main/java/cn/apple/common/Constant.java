@@ -26,6 +26,14 @@ public class Constant {
 
     public static final String LOGIN_FAILED = "登录失败,用户名或密码错误!";
 
+    public static final String DELETE_SUCCESS = "删除成功!";
+
+    public static final String DELETE_FAILED = "删除失败!";
+
+    public static final String ALLOT_RIGHTS_SUCCESS = "权限分配成功!";
+
+    public static final String ALLOT_RIGHTS_FAILED = "权限分配失败!";
+
 
 
 

@@ -2,14 +2,13 @@ package cn.apple.test;
 
 import cn.apple.mapper.RightMapper;
 import cn.apple.pojo.Right;
+import cn.apple.service.RightService;
+import cn.apple.service.RoleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @SpringBootTest
@@ -17,6 +16,12 @@ public class TestRight {
 
     @Autowired
     private RightMapper rightMapper;
+
+    @Autowired
+    private RightService rightService;
+
+    @Autowired
+    private RoleService roleService;
 
     @Test
     public void test01(){
@@ -40,5 +45,22 @@ public class TestRight {
         List<Right> list2 = list1.stream().filter(s -> s.getParentId() == 0).collect(Collectors.toList());
 
         list2.forEach(System.out :: println);
+    }
+
+    @Test
+    public void test02(){
+
+        List<Right> idList = rightService.getRightIdAndPIdList();
+
+        List<Integer> listByRightIdList = rightService.getCascadeListByRightId(101, new ArrayList<>(), idList);
+
+        listByRightIdList.forEach(System.out :: println);
+    }
+
+    @Test
+    public void test03(){
+
+        roleService.deleteRightById(30, 101);
+
     }
 }
