@@ -140,6 +140,22 @@ public class UserController {
         return ResultInfo.notFound(Constant.LOGIN_FAILED);
     }
 
+    /**
+     * 根据用户id和传过来的角色id分配角色
+     */
+    @PutMapping("/{id}/role")
+    public ResultInfo allotRoleByUserId(@PathVariable("id") Integer userId,
+                                        @RequestParam("rid") Integer rid){
+
+        boolean b = userService.allotRoleByUserId(userId, rid);
+
+        if(b){
+            return ResultInfo.ok(Constant.ALLOT_ROLE_SUCCESS);
+        }
+
+        return ResultInfo.serverError(Constant.ALLOT_ROLE_FAILED);
+    }
+
 
 
 

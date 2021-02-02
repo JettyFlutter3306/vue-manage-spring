@@ -9,6 +9,9 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 
+/**
+ * 用户实体类
+ */
 @Data
 @NoArgsConstructor
 @TableName("tb_user")
@@ -34,6 +37,6 @@ public class User {
 
     @TableField(fill = FieldFill.INSERT)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime; //创建时间
+    private transient Date createTime; //创建时间
 
 }

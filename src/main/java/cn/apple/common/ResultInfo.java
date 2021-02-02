@@ -58,7 +58,7 @@ public class ResultInfo{
 
     public static ResultInfo notFound(String msg){
 
-        ResultInfo resultInfo = new ResultInfo(false);
+        ResultInfo resultInfo = new ResultInfo(false,msg);
 
         resultInfo.setCode(StatusCode.NOT_FOUND.code);
 
@@ -97,7 +97,19 @@ public class ResultInfo{
         return resultInfo;
     }
 
+    public static ResultInfo badRequest(){
 
+        return badRequest(null);
+    }
+
+    public static ResultInfo badRequest(String msg){
+
+        ResultInfo resultInfo = new ResultInfo(false,msg);
+
+        resultInfo.setCode(StatusCode.BAD_REQUEST.code);
+
+        return resultInfo;
+    }
 
     enum StatusCode{
 

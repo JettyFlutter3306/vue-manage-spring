@@ -1,0 +1,49 @@
+package cn.apple.controller;
+
+import cn.apple.common.Constant;
+import cn.apple.common.ResultInfo;
+import cn.apple.pojo.Attribute;
+import cn.apple.service.AttributeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/attribute")
+public class AttributeController {
+
+    @Autowired
+    private AttributeService attributeService;
+
+    /**
+     * 根据id删除参数
+     * @param attrId    参数的id
+     */
+    @DeleteMapping("/{attrId}")
+    public ResultInfo deleteAttributeById(@PathVariable("attrId") Integer attrId){
+
+        boolean b = attributeService.deleteAttributeById(attrId);
+
+        if(b){
+            return ResultInfo.ok(Constant.DELETE_SUCCESS);
+        }
+
+        return ResultInfo.serverError(Constant.SYSTEM_ERROR);
+    }
+
+    /**
+     * 根据参数的id获取参数的可选值
+     */
+    @GetMapping("/{attrId}")
+    public ResultInfo getAttributeValById(@PathVariable("attrId") Integer attrId){
+
+        Attribute attribute = attributeService.getAttrValById(attrId);
+
+        if(!StringUtils.isEmpty(attribute.getAttrVal())){
+            return ResultInfo.notFound(Constant.SELECT_FAILED);
+        }
+
+        return ResultInfo.ok(Constant.SELECT_SUCCESS,attribute.getAttrVal());
+    }
+
+}

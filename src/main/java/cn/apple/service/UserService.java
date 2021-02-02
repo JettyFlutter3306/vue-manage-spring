@@ -129,5 +129,20 @@ public class UserService {
         return user != null;
     }
 
+    //分配角色
+    @Transactional
+    public boolean allotRoleByUserId(Integer userId,Integer roleId){
+
+        try {
+            userMapper.allotRoleByUserId(userId,roleId);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
 
 }

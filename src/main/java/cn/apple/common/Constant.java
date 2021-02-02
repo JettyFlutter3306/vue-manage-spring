@@ -4,9 +4,13 @@ public class Constant {
 
     public static final String SYSTEM_ERROR = "系统异常,请联系管理员!";
 
-    public static final String SELECT_SUCCESS = "查询完毕";
+    public static final String SELECT_SUCCESS = "查询完毕!";
 
-    public static final String SELECT_FAILED = "查询失败";
+    public static final String SELECT_FAILED = "查询失败!";
+
+    public static final String UPDATE_FAILED = "修改失败!";
+
+    public static final String UPDATE_SUCCESS = "修改成功!";
 
     public static final String INSERT_USER_SUCCESS = "添加用户成功!";
 
@@ -33,6 +37,22 @@ public class Constant {
     public static final String ALLOT_RIGHTS_SUCCESS = "权限分配成功!";
 
     public static final String ALLOT_RIGHTS_FAILED = "权限分配失败!";
+
+    public static final String ALLOT_ROLE_SUCCESS = "角色分配成功!";
+
+    public static final String ALLOT_ROLE_FAILED = "角色分配失败!";
+
+    public static final String CREATED_SUCCESS = "添加成功!";
+
+    public static final String CREATED_FAILED = "添加失败!";
+
+    public static final String UPLOAD_SUCCESS = "上传成功!";
+
+    public static final String UPLOAD_FAILED = "上传失败!";
+
+    public static final String INSERT_FAILED = "添加失败!";
+
+    public static final String INSERT_SUCCESS = "添加成功!";
 
 
 

@@ -92,7 +92,7 @@ public class RightService {
     }
 
     /**
-     * 根据权限Id获取它的下级权限Id列表
+     * 根据权限Id获取它的所有的下级权限Id列表
      * @param rightId           需要查询的权限Id
      * @param childRightList    子节点的Id集合
      * @param rightIdList       用来对照的权限对象的Id和parentId
@@ -110,7 +110,7 @@ public class RightService {
 
                 if(this.childIdIsExist(right.getId(),rightIdList)){
                     //递归查询,childRightList负责收集子节点的id,rightIdList负责对照
-                    getCascadeListByRightId(right.getId(),childRightList,rightIdList);
+                    this.getCascadeListByRightId(right.getId(),childRightList,rightIdList);
                 }
             }
         }
@@ -128,7 +128,7 @@ public class RightService {
         return rightMapper.selectList(wrapper);
     }
 
-    //查询是否子节点Id
+    //查询是否有子节点Id
     private boolean childIdIsExist(Integer rightId,List<Right> rightIdList){
 
         for (Right right : rightIdList) {
