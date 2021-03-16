@@ -8,7 +8,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import java.util.Calendar;
 import java.util.Map;
 
-public class JwtUtils {
+public class JwtUtil {
 
     //授权签名,尽量随便写
     public static final String TOKEN = "TOKEN@WEIisnasa.cn";

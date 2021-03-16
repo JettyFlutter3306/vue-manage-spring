@@ -5,6 +5,7 @@ import cn.apple.common.ResultInfo;
 import cn.apple.pojo.Attribute;
 import cn.apple.service.AttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class AttributeController {
      * 根据id删除参数
      * @param attrId    参数的id
      */
+    @PreAuthorize("hasAuthority('attribute:delete')")
     @DeleteMapping("/{attrId}")
     public ResultInfo deleteAttributeById(@PathVariable("attrId") Integer attrId){
 
@@ -34,6 +36,7 @@ public class AttributeController {
     /**
      * 根据参数的id获取参数的可选值
      */
+    @PreAuthorize("hasAuthority('attribute:select')")
     @GetMapping("/{attrId}")
     public ResultInfo getAttributeValById(@PathVariable("attrId") Integer attrId){
 

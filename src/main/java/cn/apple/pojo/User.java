@@ -31,12 +31,12 @@ public class User {
     @Pattern(regexp = "^(0|86|17951)?(13[0-9]|15[0123456789]|17[678]|18[0-9]|14[57])[0-9]{8}$")
     private String mobile;
 
-    private String roleName;  //角色名称
-
     private Integer status; //用户状态,默认1
 
     @TableField(fill = FieldFill.INSERT)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private transient Date createTime; //创建时间
+    private Date createTime; //创建时间
+
+
 
 }

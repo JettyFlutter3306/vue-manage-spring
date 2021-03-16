@@ -24,11 +24,11 @@ public class Right {
 
     private String rootPath; //根路径
 
-    private String secondPath; //次级路径
-
     private String icon; //图标
 
     private Integer level; //权限等级
+
+    private String identity;//权限标识
 
     @TableField(exist = false)
     private List<Right> children = new ArrayList<>(); //子节点

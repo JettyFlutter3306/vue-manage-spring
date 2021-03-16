@@ -90,7 +90,12 @@ public class ResultInfo{
 
     public static ResultInfo forbidden(){
 
-        ResultInfo resultInfo = new ResultInfo(false);
+        return forbidden(null);
+    }
+
+    public static ResultInfo forbidden(String msg){
+
+        ResultInfo resultInfo = new ResultInfo(false,msg);
 
         resultInfo.setCode(StatusCode.FORBIDDEN.code);
 
@@ -125,6 +130,8 @@ public class ResultInfo{
         StatusCode(Integer code) {
             this.code = code;
         }
+
+
     }
 
 

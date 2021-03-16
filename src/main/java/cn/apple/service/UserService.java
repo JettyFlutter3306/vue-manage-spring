@@ -122,7 +122,8 @@ public class UserService {
 
         wrapper
                 .eq("username",username)
-                .eq("password",password);
+                .eq("password",password)
+                .eq("status",1);
 
         User user = userMapper.selectOne(wrapper);
 
@@ -144,5 +145,12 @@ public class UserService {
         return false;
     }
 
+    /**
+     * 根据用户名称查询用户信息
+     */
+    public User selectUserByUserName(String username){
+
+        return null;
+    }
 
 }

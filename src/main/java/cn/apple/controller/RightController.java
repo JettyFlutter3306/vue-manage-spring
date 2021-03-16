@@ -5,6 +5,7 @@ import cn.apple.common.ResultInfo;
 import cn.apple.pojo.Right;
 import cn.apple.service.RightService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class RightController {
     /***
      * 获取全部权限
      */
+    @PreAuthorize("hasAnyRole('超级管理员','管理员')")
     @GetMapping
     public ResultInfo getRightList(@RequestParam(value = "tree",defaultValue = "") String tree){
 
@@ -40,6 +42,7 @@ public class RightController {
     /**
      * 获取菜单列表
      */
+    @PreAuthorize("hasAnyRole('超级管理员','管理员')")
     @GetMapping("/menus")
     public ResultInfo getMenuList(){
 

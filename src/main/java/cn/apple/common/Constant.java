@@ -54,6 +54,8 @@ public class Constant {
 
     public static final String INSERT_SUCCESS = "添加成功!";
 
+    public static final String ACCESS_DENIED = "权限不足!";
+
 
 
 

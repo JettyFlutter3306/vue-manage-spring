@@ -4,9 +4,9 @@ import cn.apple.common.Constant;
 import cn.apple.common.ResultInfo;
 import cn.apple.pojo.User;
 import cn.apple.service.UserService;
-import cn.apple.util.JwtUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -19,9 +19,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PreAuthorize("hasAuthority('user:select')")
     @GetMapping
-    public ResultInfo getUserList(@RequestParam("pageNum") Integer pageNum,
-                                  @RequestParam("pageSize") Integer pageSize){
+    public ResultInfo getUserList(@RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
+                                  @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize){
 
         Page<User> userPage = userService.getUserList(pageNum, pageSize);
 
@@ -32,6 +33,7 @@ public class UserController {
      * 根据用户id获取用户信息
      * @param id 用户id
      */
+    @PreAuthorize("hasAuthority('user:delete')")
     @GetMapping("/{id}")
     public ResultInfo getUserById(@PathVariable("id") Integer id){
 
@@ -107,9 +109,9 @@ public class UserController {
      * @param pageSize  页面大小
      */
     @GetMapping("/fuzzySearch")
-    public ResultInfo fuzzySearch(@RequestParam("query") String keyword,
-                                  @RequestParam("pageNum") Integer pageNum,
-                                  @RequestParam("pageSize") Integer pageSize){
+    public ResultInfo fuzzySearch(@RequestParam(value = "query",defaultValue = "") String keyword,
+                                  @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
+                                  @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize){
 
         Page<User> page = userService.fuzzySearchUsers(keyword, pageNum, pageSize);
 
@@ -118,26 +120,6 @@ public class UserController {
         }
 
         return ResultInfo.notFound(Constant.SYSTEM_ERROR);
-    }
-
-
-    @PostMapping("/login")
-    public ResultInfo login(@RequestParam("username") String username,
-                            @RequestParam("password") String password){
-
-        boolean b = userService.checkLogin(username, password);
-
-        if(b){
-            Map<String,String> map = new HashMap<>();
-            map.put("username",username);
-            map.put("password",password);
-
-            String token = JwtUtils.getToken(map);
-
-            return ResultInfo.ok(Constant.LOGIN_SUCCESS,token);
-        }
-
-        return ResultInfo.notFound(Constant.LOGIN_FAILED);
     }
 
     /**

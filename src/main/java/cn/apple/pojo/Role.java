@@ -22,8 +22,6 @@ public class Role {
 
     private String rightIds; //权限编号字符串
 
-    private String rightUrl; //操作路径字符串
-
     private String roleDesc; //角色描述
 
     @TableField(exist = false)
