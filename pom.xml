@@ -10,20 +10,24 @@
         <version>2.3.7.RELEASE</version>
     </parent>
 
-    <groupId>org.example</groupId>
+    <!--element是信仰!-->
+    <groupId>cn.element</groupId>
     <artifactId>vue-manage-spring</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
+
+        <!--web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!--lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -43,7 +47,6 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.0.5</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -66,15 +69,33 @@
 
         <!--JWT授权验证-->
         <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-            <version>3.4.0</version>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
         </dependency>
 
         <!--SpringSecurity-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- HuTool工具类-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.3.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.11</version>
         </dependency>
 
     </dependencies>
