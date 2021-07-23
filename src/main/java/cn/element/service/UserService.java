@@ -5,6 +5,7 @@ import cn.element.pojo.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,11 +16,18 @@ public class UserService {
     private UserMapper userMapper;
 
     //分页查询用户列表
-    public Page<User> getUserList(Integer pageNum,Integer pageSize){
+    public Page<User> getUserList(String keyword, Integer pageNum, Integer pageSize){
+
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+
+        wrapper
+                .like("username",keyword)
+                .or()
+                .like("email",keyword);
 
         Page<User> page = new Page<>(pageNum,pageSize);
 
-        userMapper.selectPage(page,null);
+        userMapper.selectPage(page,wrapper);
 
         return page;
     }
@@ -27,6 +35,10 @@ public class UserService {
     //添加一个用户
     @Transactional
     public boolean addUser(User user){
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        user.setPassword(encoder.encode(user.getPassword()));
 
         int i = userMapper.insert(user);
 
@@ -72,23 +84,6 @@ public class UserService {
         int i = userMapper.updateById(user);
 
         return i != -1;
-    }
-
-    //模糊查询
-    public Page<User> fuzzySearchUsers(String keyword,Integer pageNum,Integer pageSize){
-
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-
-        wrapper
-                .like("username",keyword)
-                .or()
-                .like("email",keyword);
-
-        Page<User> page = new Page<>(pageNum,pageSize);
-
-        userMapper.selectPage(page,wrapper);
-
-        return page;
     }
 
     //登录校验

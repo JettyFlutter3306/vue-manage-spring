@@ -1,5 +1,6 @@
 package cn.element.config;
 
+import cn.element.handler.CustomizedAuthFilter;
 import cn.element.handler.JwtAuthenticationEntryPoint;
 import cn.element.handler.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 
 import javax.sql.DataSource;
@@ -87,6 +88,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.exceptionHandling()            //自定义权限不足处理器
                 .accessDeniedHandler(accessDeniedHandler);
+
+        http.addFilterAt(customizedAuthFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
@@ -102,4 +105,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
     }
+
+    @Bean
+    protected CustomizedAuthFilter customizedAuthFilter() throws Exception {
+
+        CustomizedAuthFilter filter = new CustomizedAuthFilter();
+
+        filter.setAuthenticationManager(authenticationManagerBean());
+
+        return filter;
+    }
+
 }

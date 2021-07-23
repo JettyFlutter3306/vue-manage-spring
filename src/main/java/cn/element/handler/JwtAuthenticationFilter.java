@@ -1,15 +1,16 @@
 package cn.element.handler;
 
 import cn.element.common.Constant;
-import cn.element.pojo.MyUser;
+import cn.element.common.ResultInfo;
 import cn.element.service.MyUserDetailsService;
+import cn.element.util.JsonUtil;
 import cn.element.util.JwtUtil;
 import cn.element.util.RedisUtil;
 import cn.element.util.SecurityUtil;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -58,12 +59,14 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
         Claims claim = JwtUtil.getClaimByToken(token);
 
-        if(claim == null){
-            throw new JwtException(Constant.TOKEN_INVALID);
-        }
+        if(claim == null || JwtUtil.isTokenExpired(claim)){
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
-        if(JwtUtil.isTokenExpired(claim)){
-            throw new JwtException(Constant.TOKEN_EXPIRED);
+            ResultInfo resultInfo = ResultInfo.notLogin(Constant.NOT_LOGIN);
+
+            JsonUtil.writeValueAsString(resultInfo, response);
+
+            return;
         }
 
         String username = claim.getSubject();

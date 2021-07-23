@@ -56,7 +56,7 @@ public class Constant {
 
     public static final String ACCESS_DENIED = "权限不足!";
 
-    public static final String NOT_LOGIN = "未登录,请先登录!";
+    public static final String NOT_LOGIN = "登录信息已过期,请重新登录!";
 
 
 

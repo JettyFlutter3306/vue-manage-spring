@@ -1,6 +1,5 @@
 package cn.element.util;
 
-import cn.element.pojo.MyUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

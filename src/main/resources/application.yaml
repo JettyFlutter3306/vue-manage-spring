@@ -17,8 +17,8 @@ spring:
       name: admin  #默认的用户名
       password: 123456  #默认密码
 
-  redis:
-    host: 127.0.0.1
+#  redis:
+#    host: 127.0.0.1
 
 # 配置日志
 mybatis-plus:

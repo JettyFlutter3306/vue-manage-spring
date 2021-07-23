@@ -5,8 +5,6 @@ import lombok.Data;
 @Data
 public class ResultInfo{
 
-    private Boolean flag;
-
     private Integer code;
 
     private String msg;
@@ -17,19 +15,13 @@ public class ResultInfo{
 
     }
 
-    public ResultInfo(Boolean flag, String msg, Object data) {
-        this.flag = flag;
+    public ResultInfo(String msg, Object data) {
         this.msg = msg;
         this.data = data;
     }
 
-    public ResultInfo(Boolean flag, String msg) {
-        this.flag = flag;
+    public ResultInfo(String msg) {
         this.msg = msg;
-    }
-
-    public ResultInfo(Boolean flag) {
-        this.flag = flag;
     }
 
     public static ResultInfo ok(){
@@ -44,7 +36,7 @@ public class ResultInfo{
 
     public static ResultInfo ok(String msg,Object data){
 
-        ResultInfo resultInfo = new ResultInfo(true,msg,data);
+        ResultInfo resultInfo = new ResultInfo(msg,data);
 
         resultInfo.setCode(StatusCode.SUCCESS.code);
 
@@ -58,7 +50,7 @@ public class ResultInfo{
 
     public static ResultInfo notFound(String msg){
 
-        ResultInfo resultInfo = new ResultInfo(false,msg);
+        ResultInfo resultInfo = new ResultInfo(msg);
 
         resultInfo.setCode(StatusCode.NOT_FOUND.code);
 
@@ -72,7 +64,7 @@ public class ResultInfo{
 
     public static ResultInfo created(String msg){
 
-        ResultInfo resultInfo = new ResultInfo(true,msg);
+        ResultInfo resultInfo = new ResultInfo(msg);
 
         resultInfo.setCode(StatusCode.CREATED.code);
 
@@ -81,7 +73,7 @@ public class ResultInfo{
 
     public static ResultInfo serverError(String msg){
 
-        ResultInfo resultInfo = new ResultInfo(false,msg);
+        ResultInfo resultInfo = new ResultInfo(msg);
 
         resultInfo.setCode(StatusCode.SERVER_ERROR.code);
 
@@ -95,7 +87,7 @@ public class ResultInfo{
 
     public static ResultInfo forbidden(String msg){
 
-        ResultInfo resultInfo = new ResultInfo(false,msg);
+        ResultInfo resultInfo = new ResultInfo(msg);
 
         resultInfo.setCode(StatusCode.FORBIDDEN.code);
 
@@ -109,9 +101,18 @@ public class ResultInfo{
 
     public static ResultInfo badRequest(String msg){
 
-        ResultInfo resultInfo = new ResultInfo(false,msg);
+        ResultInfo resultInfo = new ResultInfo(msg);
 
         resultInfo.setCode(StatusCode.BAD_REQUEST.code);
+
+        return resultInfo;
+    }
+
+    public static ResultInfo notLogin(String msg) {
+
+        ResultInfo resultInfo = new ResultInfo(msg);
+
+        resultInfo.setCode(StatusCode.NOT_LOGIN.code);
 
         return resultInfo;
     }
@@ -121,6 +122,7 @@ public class ResultInfo{
         SUCCESS(200),
         CREATED(201),
         BAD_REQUEST(400),
+        NOT_LOGIN(401),
         FORBIDDEN(403),
         NOT_FOUND(404),
         SERVER_ERROR(500);
