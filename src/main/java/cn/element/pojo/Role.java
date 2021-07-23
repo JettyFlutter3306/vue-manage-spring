@@ -20,18 +20,13 @@ public class Role {
 
     private String roleName; //角色名称
 
-    private String rightIds; //权限编号字符串
-
     private String roleDesc; //角色描述
 
+    private String roleIdentity;  //角色标识
+
     @TableField(exist = false)
-    private List<Right> children = new ArrayList<>(); //权限编号列表
+    private List<Right> children = new ArrayList<>(); //权限列表
 
     @TableField(exist = false)
     private List<String> rightUrlList; //操作路径列表
-
-
-
-
-
 }

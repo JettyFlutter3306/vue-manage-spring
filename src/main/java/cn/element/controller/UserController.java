@@ -45,7 +45,7 @@ public class UserController {
         return ResultInfo.notFound(SYSTEM_ERROR);
     }
 
-    @PreAuthorize("hasAuthority('user:add')")
+    @PreAuthorize("hasAuthority('user:insert')")
     @PostMapping
     public ResultInfo addUser(@RequestBody User user){
 
@@ -71,7 +71,7 @@ public class UserController {
         return ResultInfo.serverError(SYSTEM_ERROR);
     }
 
-    @PreAuthorize("hasAuthority('user:edit')")
+    @PreAuthorize("hasAuthority('user:update')")
     @PutMapping
     public ResultInfo editUserStatus(@RequestParam("id") Integer id,
                                      @RequestParam("status") Integer status){

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.element.mapper.RightMapper">
+    <resultMap type="cn.element.pojo.Right" id="baseMapper">
+        <id column="id" property="id"/>
+        <result column="right_name" property="rightName"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="root_path" property="rootPath"/>
+        <result column="identity" property="identity"/>
+        <result column="icon" property="icon"/>
+        <result column="level" property="level"/>
+    </resultMap>
+
+    <insert id="insertByRoleId">
+        insert into
+            `inner_role_right`
+        values
+        <foreach collection="list" separator="," item="item" index="index">
+            (null, #{roleId}, #{item})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByRoleId">
+        delete
+        from
+            `inner_role_right`
+        where
+            role_id = #{roleId}
+    </delete>
+
+    <select id="selectRightListByRoleId" resultMap="baseMapper">
+        select
+            a.id,
+            a.right_name,
+            a.parent_id,
+            a.root_path,
+            a.identity,
+            a.icon,
+            a.level
+        from
+            `tb_right` as a left join `inner_role_right` as b
+        on
+            a.id = b.right_id
+        where
+            b.role_id = #{roleId}
+    </select>
+
+
+
+
+</mapper>

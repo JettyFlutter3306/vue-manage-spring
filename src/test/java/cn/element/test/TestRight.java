@@ -60,7 +60,9 @@ public class TestRight {
     @Test
     public void test03(){
 
-        roleService.deleteRightById(30, 101);
+        List<Right> rightList = rightMapper.selectRightListByRoleId(42);
+
+        rightList.forEach(System.out::println);
 
     }
 }

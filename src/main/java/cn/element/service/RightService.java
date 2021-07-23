@@ -7,6 +7,8 @@ import cn.element.pojo.Role;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -14,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class RightService {
@@ -22,50 +23,44 @@ public class RightService {
     @Autowired
     private RightMapper rightMapper;
 
-    @Autowired
-    private RoleMapper roleMapper;
-
     //获取所有的权限,返回一个列表
     public List<Right> getRightList(){
 
         return rightMapper.selectList(null);
     }
 
-    //根据角色的Id获取树形的权限列表
+    /**
+     * 根据角色的Id获取树形的权限列表
+     * 以时间换空间,否则的话时间复杂度则是O(n²)
+     * 这样一来时间复杂度就是O(n)
+     * @param roleId        角色id
+     */
     public List<Right> getRightListAsTree(Integer roleId){
 
-        QueryWrapper<Role> wrapper = new QueryWrapper<>();
-        //构造查询条件
-        wrapper
-                .select("right_ids")
-                .eq("role_id",roleId);
+        List<Right> rightList = rightMapper.selectRightListByRoleId(roleId);  //先查出来
 
-        Role role = roleMapper.selectOne(wrapper);
+        Map<Integer,Right> map = new HashMap<>();  //定义一个HashMap
+        List<Right> list = new ArrayList<>();  //顶一个list作为最后的结果返回
 
-        String rightIdStr = role.getRightIds();
-
-        if(!StringUtils.isEmpty(rightIdStr)){
-            //将字符串转为整形数组,即使权限编号数组
-            List<Integer> rightIds = Stream.of(rightIdStr.split(",")).map(Integer::valueOf).collect(Collectors.toList());
-
-            List<Right> rightList = rightMapper.selectBatchIds(rightIds);
-
-            Map<Integer,Right> map = new HashMap<>();
-
-            //先放置一级菜单
-            rightList.forEach(r -> map.put(r.getId(),r));
-
-            for (Right right : rightList) {
-                if(map.containsKey(right.getParentId())){
-                    map.get(right.getParentId()).getChildren().add(right);
-                }
-            }
-
-            return rightList.stream().filter(s -> s.getParentId() == 0).collect(Collectors.toList());
+        for (Right right : rightList) {
+            map.put(right.getId(), right);
         }
 
-        //不能返回空值,否则前端递归遍历树形权限不好处理
-        return new ArrayList<>();
+        for (Right right : rightList) {
+            Right parentObj = map.get(right.getParentId());
+
+            if(ObjectUtils.isEmpty(parentObj)){  //父结点是空的表明right是一级结点
+                list.add(right);
+            }else{  //否则就把right加入到父结点的children子结点列表里面
+                parentObj.getChildren().add(right);
+            }
+        }
+
+        if(!CollectionUtils.isEmpty(rightList)){
+            return list;
+        }
+
+        return new ArrayList<>();  //不能返回空值,否则前端递归遍历树形权限不好处理
     }
 
     //获取菜单列表

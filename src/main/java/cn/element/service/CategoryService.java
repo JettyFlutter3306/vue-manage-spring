@@ -119,15 +119,9 @@ public class CategoryService {
     @Transactional
     public boolean editCategory(Category category){
 
-        try {
-            categoryMapper.updateById(category);
+        int i = categoryMapper.updateById(category);
 
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return false;
+        return i != -1;
     }
 
     //逻辑删除分类
@@ -138,15 +132,9 @@ public class CategoryService {
 
         List<Integer> list = this.getSubIdListByParentId(catId, new ArrayList<>(), idList);//获取要删除的id列表
 
-        try {
-            categoryMapper.deleteBatchIds(list);
+        int i = categoryMapper.deleteBatchIds(list);
 
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return false;
+        return i != -1;
     }
 
     //获取分类表的id和parentId集合方便对比
@@ -186,7 +174,7 @@ public class CategoryService {
     }
 
     //判断是否有子节点
-    public boolean childExists(Integer catId,List<Category> list){
+    private boolean childExists(Integer catId,List<Category> list){
 
         for (Category category : list) {
             if(category.getParentId().equals(catId)){

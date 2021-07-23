@@ -15,5 +15,11 @@ public interface RightMapper extends BaseMapper<Right> {
             "        where c.user_id = #{uid}")
     List<Right> selectRightListByUID(@Param("uid") Integer uid);
 
+    List<Right> selectRightListByRoleId(@Param("roleId") Integer roleId);
+
+    int deleteByRoleId(@Param("roleId") Integer roleId);  //根据角色的id删除中间表里的数据
+
+    int insertByRoleId(@Param("roleId") Integer roleId, @Param("list") List<Integer> rightIds);
+
 
 }

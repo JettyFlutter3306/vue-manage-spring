@@ -47,14 +47,10 @@ public class RoleController {
             return ResultInfo.notFound();
         }
 
-        for (Role role : roleList) {
-            role.setChildren(rightService.getRightListAsTree(role.getRoleId()));
-        }
-
         return ResultInfo.ok(Constant.SELECT_SUCCESS,roleList);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/rights/{id}")
     public ResultInfo getRightListByRoleId(@PathVariable("id") Integer roleId){
 
         List<Right> list = rightService.getRightListAsTree(roleId);
@@ -66,24 +62,9 @@ public class RoleController {
         return ResultInfo.ok(Constant.SELECT_SUCCESS,list);
     }
 
-    @DeleteMapping("/{rightId}")
-    public ResultInfo deleteRightById(@PathVariable("rightId") Integer rightId,
-                                      @RequestParam("roleId") Integer roleId){
-
-        boolean b = roleService.deleteRightById(roleId, rightId);
-
-        if(b){
-            List<Right> rightTreeList = rightService.getRightListAsTree(roleId);
-
-            return ResultInfo.ok(Constant.DELETE_SUCCESS,rightTreeList);
-        }
-
-        return ResultInfo.serverError(Constant.DELETE_FAILED);
-    }
-
     @PostMapping("/{roleId}")
     public ResultInfo updateRightsByRoleId(@PathVariable("roleId") Integer roleId,
-                                           @RequestParam("rids") String rids){
+                                           @RequestBody List<Integer> rids){
 
         boolean b = roleService.updateRightsByRoleId(roleId, rids);
 

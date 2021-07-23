@@ -145,7 +145,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{catId}/attributes/{attrId}")
-    public ResultInfo getCategroyAttrById(@PathVariable("catId") Integer catId,
+    public ResultInfo getCategoryAttrById(@PathVariable("catId") Integer catId,
                                           @PathVariable("attrId") Integer attrId,
                                           @RequestParam("attrSel") String attrSel){
 
