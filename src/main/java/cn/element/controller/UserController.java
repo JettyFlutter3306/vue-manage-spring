@@ -85,6 +85,7 @@ public class UserController {
         return ResultInfo.serverError(SYSTEM_ERROR);
     }
 
+    @PreAuthorize("hasAuthority('user:update')")
     @PutMapping("/update")
     public ResultInfo editUserInfo(@RequestBody User user){
 
@@ -100,6 +101,7 @@ public class UserController {
     /**
      * 根据用户id和传过来的角色id分配角色
      */
+    @PreAuthorize("hasAuthority({'user:update','role:update'})")
     @PutMapping("/{id}/role")
     public ResultInfo allotRoleByUserId(@PathVariable("id") Integer userId,
                                         @RequestParam("rid") Integer rid){

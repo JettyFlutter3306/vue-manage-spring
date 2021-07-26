@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -39,7 +40,11 @@ public class RoleService {
     @Transactional
     public boolean updateRightsByRoleId(Integer roleId, List<Integer> rids){
 
-        rightMapper.deleteByRoleId(roleId);
+        int j = rightMapper.deleteByRoleId(roleId);
+
+        if(CollectionUtils.isEmpty(rids)){
+            return j != -1;
+        }
 
         int i = rightMapper.insertByRoleId(roleId, rids);
 
@@ -56,6 +61,32 @@ public class RoleService {
         wrapper.select("role_id","role_name");
 
         return roleMapper.selectList(wrapper);
+    }
+
+    /**
+     * 根据用户id获取角色列表
+     */
+    public List<Role> getRolesByUserId(Integer uid) {
+
+        return roleMapper.selectRoleListByUID(uid);
+    }
+
+    /**
+     * 根据用户id和角色id列表分配角色
+     * 先将用户原有的角色删除然后再插入新的角色
+     */
+    @Transactional
+    public boolean updateRolesByUserId(Integer uid, List<Integer> roleIdList) {
+
+        int i = roleMapper.deleteUserRoleById(uid);
+
+        if(CollectionUtils.isEmpty(roleIdList)){
+            return i != -1;
+        }
+
+        int j = roleMapper.insertUserRoleById(uid, roleIdList);
+
+        return j != -1;
     }
 
 

@@ -25,7 +25,7 @@ public class Role {
     private String roleIdentity;  //角色标识
 
     @TableField(exist = false)
-    private List<Right> children = new ArrayList<>(); //权限列表
+    private List<Right> children; //权限列表
 
     @TableField(exist = false)
     private List<String> rightUrlList; //操作路径列表

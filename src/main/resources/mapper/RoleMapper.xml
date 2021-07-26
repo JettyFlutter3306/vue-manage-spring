@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.element.mapper.RoleMapper">
+    <resultMap type="cn.element.pojo.Role" id="baseMapper">
+        <id column="id" property="roleId"/>
+    </resultMap>
+
+    <insert id="insertUserRoleById">
+        insert into
+            `inner_user_role`
+        values
+        <foreach collection="list" separator="," item="rid">
+            (null, #{uid}, #{rid})
+        </foreach>
+    </insert>
+
+    <delete id="deleteUserRoleById">
+        delete from
+            `inner_user_role`
+        where
+            user_id = #{uid}
+    </delete>
+
+    <select id="selectRoleListByUID" resultType="cn.element.pojo.Role">
+        select
+            *
+        from
+            `tb_role` as a
+        where
+            a.role_id
+        in
+            (select
+                role_id
+            from
+                `inner_user_role`
+            where
+                user_id = #{uid})
+    </select>
+
+    <select id="selectNotInRoleListByUID" resultType="cn.element.pojo.Role">
+        select
+            role_id,
+            role_name
+        from
+            `tb_role` as a
+        where
+            a.role_id
+        not in
+            (select
+                role_id
+            from
+                `inner_user_role`
+            where
+                user_id = #{uid})
+    </select>
+</mapper>

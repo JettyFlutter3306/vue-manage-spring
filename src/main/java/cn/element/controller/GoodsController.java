@@ -6,6 +6,7 @@ import cn.element.pojo.Goods;
 import cn.element.service.GoodsService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ public class GoodsController {
     @Autowired
     private GoodsService goodsService;
 
+    @PreAuthorize("hasAuthority('goods:select')")
     @GetMapping
     public ResultInfo getGoodsList(@RequestParam(value = "query",defaultValue = "") String keyword,
                                    @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
@@ -30,6 +32,7 @@ public class GoodsController {
         return ResultInfo.notFound(Constant.SELECT_FAILED);
     }
 
+    @PreAuthorize("hasAuthority('goods:delete')")
     @DeleteMapping("{goodsId}")
     public ResultInfo deleteGoodsById(@PathVariable("goodsId") Integer goodsId){
 
@@ -47,9 +50,10 @@ public class GoodsController {
      * @param goods     使用Goods类对象接收前端传入的json字符串
      *                  所以必须要使用@RequestBody注解
      *                  数据格式 Content-Type = application/json
-     *                  和通常的 ContentType = application/x-www-form-urlencoded数据格式不一样
+     *                  和通常的 Content-Type = application/x-www-form-urlencoded数据格式不一样
      *                  不使用@RequestBody的话会报错
      */
+    @PreAuthorize("hasAuthority('goods:insert')")
     @PutMapping
     public ResultInfo addGoods(@RequestBody Goods goods){
 

@@ -8,6 +8,7 @@ import cn.element.service.AttributeService;
 import cn.element.service.CategoryService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,7 @@ public class CategoryController {
      * @param pageNum   当前页码
      * @param pageSize  每页的条数
      */
+    @PreAuthorize("hasAuthority('category:select')")
     @GetMapping
     public ResultInfo getCategoryList(@RequestParam(value = "type",defaultValue = "3") Integer type,
                                       @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
@@ -46,6 +48,7 @@ public class CategoryController {
     /**
      * 获取数据库中完整的树形结构分类实体列表
      */
+    @PreAuthorize("hasAuthority('category:select')")
     @GetMapping("/categoryList")
     public ResultInfo getCategoryList(@RequestParam(value = "type",required = false) Integer type){
 
@@ -61,6 +64,7 @@ public class CategoryController {
     /**
      * 根据catId查询分类对象
      */
+    @PreAuthorize("hasAuthority('category:select')")
     @GetMapping("/{catId}")
     public ResultInfo selectById(@PathVariable("catId") Integer catId){
 
@@ -76,6 +80,7 @@ public class CategoryController {
     /**
      * 添加分类对象
      */
+    @PreAuthorize("hasAuthority('category:insert')")
     @PostMapping
     public ResultInfo addCategory(Category category){
 
@@ -91,6 +96,7 @@ public class CategoryController {
     /**
      * 修改分类对象
      */
+    @PreAuthorize("hasAuthority('category:update')")
     @PutMapping
     public ResultInfo editCategory(Category category){
 
@@ -107,6 +113,7 @@ public class CategoryController {
      * 删除分类
      * 就是把isShow字段设为0即可,逻辑删除
      */
+    @PreAuthorize("hasAuthority('category:delete')")
     @DeleteMapping("/{catId}")
     public ResultInfo deleteCategory(@PathVariable("catId") Integer catId){
 
@@ -119,6 +126,7 @@ public class CategoryController {
         return ResultInfo.serverError(Constant.SYSTEM_ERROR);
     }
 
+    @PreAuthorize("hasAuthority('category:select')")
     @GetMapping("/{catId}/attributes")
     public ResultInfo getAttributesByCatId(@PathVariable("catId") Integer catId,
                                            @RequestParam("sel") String sel){
@@ -132,6 +140,7 @@ public class CategoryController {
         return ResultInfo.notFound(Constant.SELECT_FAILED);
     }
 
+    @PreAuthorize("hasAuthority('category:insert')")
     @PostMapping("/{catId}/attributes")
     public ResultInfo addOneAttribute(Attribute attribute){
 
@@ -144,6 +153,7 @@ public class CategoryController {
         return ResultInfo.serverError(Constant.SYSTEM_ERROR);
     }
 
+    @PreAuthorize("hasAuthority('category:select')")
     @GetMapping("/{catId}/attributes/{attrId}")
     public ResultInfo getCategoryAttrById(@PathVariable("catId") Integer catId,
                                           @PathVariable("attrId") Integer attrId,
@@ -163,6 +173,7 @@ public class CategoryController {
      * @param attrId        参数id
      * @param attrName      名称
      */
+    @PreAuthorize("hasAuthority('category:update')")
     @PutMapping("/attributes/{attrId}")
     public ResultInfo editAttributeById(@PathVariable("attrId") Integer attrId,
                                         @RequestParam("attrName") String attrName){
@@ -181,6 +192,7 @@ public class CategoryController {
      * @param attrId    参数id
      * @param attrVal   可选参数
      */
+    @PreAuthorize("hasAuthority('category:update')")
     @PostMapping("/attributes/{attrId}")
     public ResultInfo editAttrValTagById(@PathVariable("attrId") Integer attrId,
                                          @RequestParam("attrVal") String attrVal){

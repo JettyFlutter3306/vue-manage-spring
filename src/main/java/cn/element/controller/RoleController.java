@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static cn.element.common.Constant.*;
+
 @RestController
 @RequestMapping("/role")
 public class RoleController {
@@ -26,12 +28,13 @@ public class RoleController {
     /**
      * 获取角色名称及id
      */
+    @PreAuthorize("hasAuthority('role:select')")
     @GetMapping("/roleName")
     public ResultInfo getRoleNameList(){
 
         List<Role> roleList = roleService.getRoleNameListAndId();
 
-        return ResultInfo.ok(Constant.SELECT_SUCCESS,roleList);
+        return ResultInfo.ok(SELECT_SUCCESS,roleList);
     }
 
     /**
@@ -47,9 +50,10 @@ public class RoleController {
             return ResultInfo.notFound();
         }
 
-        return ResultInfo.ok(Constant.SELECT_SUCCESS,roleList);
+        return ResultInfo.ok(SELECT_SUCCESS,roleList);
     }
 
+    @PreAuthorize("hasAuthority({'role:select','right:select'})")
     @GetMapping("/rights/{id}")
     public ResultInfo getRightListByRoleId(@PathVariable("id") Integer roleId){
 
@@ -59,9 +63,10 @@ public class RoleController {
             return ResultInfo.notFound(Constant.SELECT_FAILED);
         }
 
-        return ResultInfo.ok(Constant.SELECT_SUCCESS,list);
+        return ResultInfo.ok(SELECT_SUCCESS,list);
     }
 
+    @PreAuthorize("hasAuthority({'role:update','right:update'})")
     @PostMapping("/{roleId}")
     public ResultInfo updateRightsByRoleId(@PathVariable("roleId") Integer roleId,
                                            @RequestBody List<Integer> rids){
@@ -69,11 +74,37 @@ public class RoleController {
         boolean b = roleService.updateRightsByRoleId(roleId, rids);
 
         if(b){
-            return ResultInfo.ok(Constant.ALLOT_RIGHTS_SUCCESS);
+            return ResultInfo.ok(ALLOT_RIGHTS_SUCCESS);
         }
 
-        return ResultInfo.serverError(Constant.ALLOT_RIGHTS_FAILED);
+        return ResultInfo.serverError(ALLOT_RIGHTS_FAILED);
     }
+
+    @PreAuthorize("hasAuthority('role:select')")
+    @GetMapping("/user/{uid}")
+    public ResultInfo getRolesByUserId(@PathVariable("uid") Integer uid) {
+
+        List<Role> roleList = roleService.getRolesByUserId(uid);
+
+        return ResultInfo.ok(SELECT_SUCCESS, roleList);
+    }
+
+    @PreAuthorize("hasAuthority('role:update')")
+    @PostMapping("/allot/{uid}")
+    public ResultInfo updateRolesByUserId(@PathVariable("uid") Integer uid,
+                                          @RequestBody List<Integer> roleIdList) {
+
+        boolean b = roleService.updateRolesByUserId(uid, roleIdList);
+
+        if(b){
+            return ResultInfo.ok(ALLOT_ROLE_SUCCESS);
+        }
+
+        return ResultInfo.serverError(SYSTEM_ERROR);
+    }
+
+
+
 
 
 

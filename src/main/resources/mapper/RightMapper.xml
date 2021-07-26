@@ -31,7 +31,7 @@
             role_id = #{roleId}
     </delete>
 
-    <select id="selectRightListByRoleId" resultMap="baseMapper">
+    <select id="selectRightListByRoleId" resultType="cn.element.pojo.Right">
         select
             a.id,
             a.right_name,
@@ -48,7 +48,22 @@
             b.role_id = #{roleId}
     </select>
 
-
+    <select id="selectRightListByUID" resultType="cn.element.pojo.Right">
+        select
+            *
+        from
+            `tb_right` as a
+        left join
+            `inner_role_right` as b
+        on
+            a.id = b.right_id
+        left join
+            `inner_user_role` as c
+        on
+            c.role_id = b.role_id
+        where
+            c.user_id = #{uid}
+    </select>
 
 
 </mapper>

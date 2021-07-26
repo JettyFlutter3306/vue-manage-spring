@@ -2,6 +2,7 @@ package cn.element.controller;
 
 import cn.element.common.Constant;
 import cn.element.common.ResultInfo;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import java.io.IOException;
 @RequestMapping("/upload")
 public class UploadController {
 
+    @PreAuthorize("hasAuthority('goods:update')")
     @PostMapping("/goodsPic")
     public ResultInfo uploadGoodsPic(MultipartFile file){
 

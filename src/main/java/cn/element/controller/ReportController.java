@@ -5,6 +5,7 @@ import cn.element.common.ResultInfo;
 import cn.element.pojo.Report;
 import cn.element.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
+    @PreAuthorize("hasAuthority('report:select')")
     @GetMapping("/type/{number}")
     public ResultInfo getReportData(@PathVariable("number") Integer number){
 
