@@ -1,6 +1,7 @@
 package cn.element.common;
 
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 
 @Data
 public class ResultInfo{
@@ -38,7 +39,7 @@ public class ResultInfo{
 
         ResultInfo resultInfo = new ResultInfo(msg,data);
 
-        resultInfo.setCode(StatusCode.SUCCESS.code);
+        resultInfo.setCode(HttpStatus.OK.value());
 
         return resultInfo;
     }
@@ -52,7 +53,7 @@ public class ResultInfo{
 
         ResultInfo resultInfo = new ResultInfo(msg);
 
-        resultInfo.setCode(StatusCode.NOT_FOUND.code);
+        resultInfo.setCode(HttpStatus.NOT_FOUND.value());
 
         return resultInfo;
     }
@@ -66,7 +67,7 @@ public class ResultInfo{
 
         ResultInfo resultInfo = new ResultInfo(msg);
 
-        resultInfo.setCode(StatusCode.CREATED.code);
+        resultInfo.setCode(HttpStatus.CREATED.value());
 
         return resultInfo;
     }
@@ -75,7 +76,7 @@ public class ResultInfo{
 
         ResultInfo resultInfo = new ResultInfo(msg);
 
-        resultInfo.setCode(StatusCode.SERVER_ERROR.code);
+        resultInfo.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 
         return resultInfo;
     }
@@ -89,7 +90,7 @@ public class ResultInfo{
 
         ResultInfo resultInfo = new ResultInfo(msg);
 
-        resultInfo.setCode(StatusCode.FORBIDDEN.code);
+        resultInfo.setCode(HttpStatus.FORBIDDEN.value());
 
         return resultInfo;
     }
@@ -103,7 +104,7 @@ public class ResultInfo{
 
         ResultInfo resultInfo = new ResultInfo(msg);
 
-        resultInfo.setCode(StatusCode.BAD_REQUEST.code);
+        resultInfo.setCode(HttpStatus.BAD_REQUEST.value());
 
         return resultInfo;
     }
@@ -112,29 +113,8 @@ public class ResultInfo{
 
         ResultInfo resultInfo = new ResultInfo(msg);
 
-        resultInfo.setCode(StatusCode.NOT_LOGIN.code);
+        resultInfo.setCode(HttpStatus.UNAUTHORIZED.value());
 
         return resultInfo;
     }
-
-    enum StatusCode{
-
-        SUCCESS(200),
-        CREATED(201),
-        BAD_REQUEST(400),
-        NOT_LOGIN(401),
-        FORBIDDEN(403),
-        NOT_FOUND(404),
-        SERVER_ERROR(500);
-
-        private final Integer code;
-
-        StatusCode(Integer code) {
-            this.code = code;
-        }
-
-
-    }
-
-
 }

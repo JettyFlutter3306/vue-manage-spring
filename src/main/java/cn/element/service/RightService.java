@@ -30,6 +30,37 @@ public class RightService {
     }
 
     /**
+     * 根据uid获取权限列表
+     */
+    public List<Right> getRightListAsTreeByUid(Integer uid) {
+
+        List<Right> rightList = rightMapper.selectRightListByUID(uid);
+
+        Map<Integer,Right> map = new HashMap<>();  //定义一个HashMap
+        List<Right> list = new ArrayList<>();  //顶一个list作为最后的结果返回
+
+        for (Right right : rightList) {
+            map.put(right.getId(), right);
+        }
+
+        for (Right right : rightList) {
+            Right parentObj = map.get(right.getParentId());
+
+            if(ObjectUtils.isEmpty(parentObj)){  //父结点是空的表明right是一级结点
+                list.add(right);
+            }else{  //否则就把right加入到父结点的children子结点列表里面
+                parentObj.getChildren().add(right);
+            }
+        }
+
+        if(!CollectionUtils.isEmpty(rightList)){
+            return list;
+        }
+
+        return new ArrayList<>();
+    }
+
+    /**
      * 根据角色的Id获取树形的权限列表
      * 以时间换空间,否则的话时间复杂度则是O(n²)
      * 这样一来时间复杂度就是O(n)

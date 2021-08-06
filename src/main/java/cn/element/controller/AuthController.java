@@ -7,10 +7,7 @@ import cn.element.service.RightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +21,7 @@ public class AuthController{
     /***
      * 获取全部权限
      */
-    @PreAuthorize("hasAnyRole('超级管理员','管理员')")
+    @PreAuthorize("hasAuthority('right:select')")
     @GetMapping
     public ResultInfo getRightList(@RequestParam(value = "tree",defaultValue = "") String tree){
 
@@ -42,7 +39,7 @@ public class AuthController{
     /**
      * 获取菜单列表
      */
-    @PreAuthorize("hasAnyRole('超级管理员','管理员')")
+    @PreAuthorize("hasAuthority('right:select')")
     @GetMapping("/menus")
     public ResultInfo getMenuList(){
 
@@ -51,5 +48,20 @@ public class AuthController{
         return ResultInfo.ok(Constant.SELECT_SUCCESS,rightList);
     }
 
+    @PreAuthorize("hasAnyRole('超级管理员','管理员')")
+    @GetMapping("/menus/{uid}")
+    public ResultInfo getRightListById(@RequestParam(value = "tree",defaultValue = "") String tree,
+                                       @PathVariable("uid") Integer uid){
+
+        if(StringUtils.isEmpty(tree)){
+            List<Right> rightList = rightService.getRightList();
+
+            return ResultInfo.ok(Constant.SELECT_SUCCESS,rightList);
+        }
+
+        List<Right> rightTree = rightService.getRightListAsTreeByUid(uid);
+
+        return ResultInfo.ok(Constant.SELECT_SUCCESS,rightTree);
+    }
 
 }

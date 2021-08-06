@@ -33,6 +33,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         ResultInfo resultInfo = ResultInfo.ok(Constant.LOGIN_SUCCESS,
                 MapUtil.builder()
                         .put("username",myUser.getUsername())
+                        .put("userId", myUser.getUserId())
                         .put("Authorization",tokenName).build()
         );
 

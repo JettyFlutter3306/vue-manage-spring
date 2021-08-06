@@ -7,7 +7,20 @@ import java.util.Collection;
 
 public class MyUser extends User {
 
-    public MyUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    private Integer userId;
+
+    public MyUser(Integer userId, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+
         super(username, password, authorities);
+
+        this.userId = userId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

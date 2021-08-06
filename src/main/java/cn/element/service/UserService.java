@@ -2,12 +2,13 @@ package cn.element.service;
 
 import cn.element.mapper.UserMapper;
 import cn.element.pojo.User;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -18,16 +19,14 @@ public class UserService {
     //分页查询用户列表
     public Page<User> getUserList(String keyword, Integer pageNum, Integer pageSize){
 
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-
-        wrapper
-                .like("username",keyword)
-                .or()
-                .like("email",keyword);
-
         Page<User> page = new Page<>(pageNum,pageSize);
 
-        userMapper.selectPage(page,wrapper);
+        List<User> userList = userMapper.selectUserList(keyword, (pageNum - 1) * pageSize, pageSize);
+
+        Integer count = userMapper.selectCount(null);
+
+        page.setRecords(userList);
+        page.setTotal(count);
 
         return page;
     }
@@ -64,8 +63,8 @@ public class UserService {
     public boolean editUserStatus(Integer id,Integer status){
 
         switch (status){
-            case 0: status = 1;break;
-            case 1: status = 0;break;
+            case User.USER_STATUS_OFF: status = User.USER_STATUS_ON;break;
+            case User.USER_STATUS_ON: status = User.USER_STATUS_OFF;break;
         }
 
         User user = new User();
@@ -86,21 +85,6 @@ public class UserService {
         return i != -1;
     }
 
-    //登录校验
-    public boolean checkLogin(String username,String password){
-
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-
-        wrapper
-                .eq("username",username)
-                .eq("password",password)
-                .eq("status",1);
-
-        User user = userMapper.selectOne(wrapper);
-
-        return user != null;
-    }
-
     //分配角色
     @Transactional
     public boolean allotRoleByUserId(Integer userId,Integer roleId){
@@ -108,14 +92,6 @@ public class UserService {
         Integer i = userMapper.allotRoleByUserId(userId, roleId);
 
         return i != -1;
-    }
-
-    /**
-     * 根据用户名称查询用户信息
-     */
-    public User selectUserByUserName(String username){
-
-        return null;
     }
 
 }

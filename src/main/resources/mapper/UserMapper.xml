@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.element.mapper.UserMapper">
+    <resultMap type="cn.element.pojo.User" id="baseMapper">
+        <id column="id" property="id"/>
+        <collection
+                property="roleList"
+                javaType="java.util.ArrayList"
+                ofType="cn.element.pojo.Role"
+                select="cn.element.mapper.UserMapper.selectRoleListByUid"
+                column="user_id = id"
+        >
+        </collection>
+    </resultMap>
+
+    <select id="selectRoleListByUid" resultType="cn.element.pojo.Role">
+        select
+            a.role_name
+        from
+            `tb_role` a
+        where
+            a.role_id
+        in
+            (select
+                b.role_id
+             from
+                `inner_user_role` b
+             where
+                user_id = #{user_id})
+    </select>
+
+    <select id="selectUserList" resultMap="baseMapper">
+        select
+            *
+        from
+            `tb_user`
+        where
+            username
+        like
+            CONCAT('%',#{keyword},'%')
+        or
+            email
+        like
+            CONCAT('%',#{keyword},'%')
+        limit
+            #{pageNum},#{pageSize}
+    </select>
+
+
+
+</mapper>

@@ -42,7 +42,9 @@ public class MyUserDetailsService implements UserDetailsService {
 
         //查询用户
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("username",username);
+        wrapper
+                .eq("username",username)
+                .eq("status", User.USER_STATUS_ON);
 
         User user = userMapper.selectOne(wrapper);
 
@@ -78,7 +80,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
             log.info("用户ID ----{} ---- 拥有的权限: {}",user.getId(),authorityList);
 
-            return new MyUser(user.getUsername(),user.getPassword(),authorityList);
+            return new MyUser(user.getId(), user.getUsername(),user.getPassword(),authorityList);
         }
 
         return null;

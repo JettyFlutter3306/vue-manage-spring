@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Pattern;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户实体类
@@ -16,6 +17,9 @@ import java.util.Date;
 @NoArgsConstructor
 @TableName("tb_user")
 public class User {
+
+    public static final int USER_STATUS_ON = 1;
+    public static final int USER_STATUS_OFF = 0;
 
     @TableId(type = IdType.AUTO)
     private Integer id;
@@ -37,6 +41,8 @@ public class User {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime; //创建时间
 
+    @TableField(exist = false)
+    private List<Role> roleList;
 
 
 }
