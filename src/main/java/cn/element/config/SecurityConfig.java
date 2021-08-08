@@ -63,6 +63,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new JwtAuthenticationFilter(this.authenticationManager());
     }
 
+    /**
+     * anonymous 仅允许匿名用户访问,如果登录了访问 反而没权限
+     * permitAll 登录能访问,不登录也能访问,一般用于静态资源js等
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -95,7 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout().logoutSuccessUrl("/");
 
-        http.csrf();
+        http.csrf().disable();
         http.cors();
 
         http.exceptionHandling()            //自定义权限不足处理器
