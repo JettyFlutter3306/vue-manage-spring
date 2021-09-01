@@ -3,10 +3,7 @@ package cn.element.handler;
 import cn.element.common.Constant;
 import cn.element.common.ResultInfo;
 import cn.element.service.MyUserDetailsService;
-import cn.element.util.JsonUtil;
-import cn.element.util.JwtUtil;
-import cn.element.util.RedisUtil;
-import cn.element.util.SecurityUtil;
+import cn.element.util.*;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +31,6 @@ import java.util.TreeSet;
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
     @Autowired
-    private RedisUtil redisUtil;
-
-    @Autowired
     private MyUserDetailsService myUserDetailsService;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager){
@@ -47,38 +41,42 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        log.info("jwt 校验 filter");
+        if(SpringUtil.getEnviron() != SpringUtil.TEST){
+            log.info("jwt 校验 filter");
 
-        String token = request.getHeader(JwtUtil.HEADER);
+            String token = request.getHeader(JwtUtil.HEADER);
 
-        if(StringUtils.isEmpty(token)){
-            chain.doFilter(request,response);
+            if(StringUtils.isEmpty(token)){
+                chain.doFilter(request,response);
 
-            return;
+                return;
+            }
+
+            Claims claim = JwtUtil.getClaimByToken(token);
+
+            if(claim == null || JwtUtil.isTokenExpired(claim)){
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+
+                ResultInfo resultInfo = ResultInfo.notLogin(Constant.NOT_LOGIN);
+
+                JsonUtil.writeValueAsString(resultInfo, response);
+
+                return;
+            }
+
+            String username = claim.getSubject();
+
+            log.info("用户---{},正在登录!",username);
+
+            //获取用户信息
+            Collection<? extends GrantedAuthority> authorities = SecurityUtil.getCurrentUserAuth().getAuthorities();
+
+            UsernamePasswordAuthenticationToken uPToken = new UsernamePasswordAuthenticationToken(username,null, authorities);
+
+            SecurityContextHolder.getContext().setAuthentication(uPToken);
+
+            chain.doFilter(request,response);  //放行
         }
-
-        Claims claim = JwtUtil.getClaimByToken(token);
-
-        if(claim == null || JwtUtil.isTokenExpired(claim)){
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-
-            ResultInfo resultInfo = ResultInfo.notLogin(Constant.NOT_LOGIN);
-
-            JsonUtil.writeValueAsString(resultInfo, response);
-
-            return;
-        }
-
-        String username = claim.getSubject();
-
-        log.info("用户---{},正在登录!",username);
-
-        //获取用户信息
-        Collection<? extends GrantedAuthority> authorities = SecurityUtil.getCurrentUserAuth().getAuthorities();
-
-        UsernamePasswordAuthenticationToken uPToken = new UsernamePasswordAuthenticationToken(username,null, authorities);
-
-        SecurityContextHolder.getContext().setAuthentication(uPToken);
 
         chain.doFilter(request,response);  //放行
     }
