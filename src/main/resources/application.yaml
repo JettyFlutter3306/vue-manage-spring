@@ -10,7 +10,7 @@ spring:
 
   #设置开发环境
   profiles:
-    active: dev
+    active: dev,test
 
   security:
     user:
