@@ -13,11 +13,4 @@ public class IndexController {
 
         return "HelloWorld!";
     }
-
-    @PostMapping("/userLogin")
-    public String login(@RequestParam("username") String username,
-                        @RequestParam("password") String password) {
-
-        return "login";
-    }
 }

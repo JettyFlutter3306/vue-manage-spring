@@ -2,7 +2,6 @@ package cn.element.handler;
 
 import cn.element.common.ResultInfo;
 import cn.element.util.JsonUtil;
-import cn.element.util.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -25,14 +24,12 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException {
 
-        if(SpringUtil.getEnviron() != SpringUtil.TEST){
-            log.info("认证失败!未登录!");
+        log.info("认证失败!未登录!");
 
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
-            ResultInfo resultInfo = ResultInfo.notLogin(NOT_LOGIN);
+        ResultInfo resultInfo = ResultInfo.notLogin(NOT_LOGIN);
 
-            JsonUtil.writeValueAsString(resultInfo,response);
-        }
+        JsonUtil.writeValueAsString(resultInfo,response);
     }
 }

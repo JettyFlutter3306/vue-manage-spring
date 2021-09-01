@@ -41,42 +41,38 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        if(SpringUtil.getEnviron() != SpringUtil.TEST){
-            log.info("jwt 校验 filter");
+        log.info("jwt 校验 filter");
 
-            String token = request.getHeader(JwtUtil.HEADER);
+        String token = request.getHeader(JwtUtil.HEADER);
 
-            if(StringUtils.isEmpty(token)){
-                chain.doFilter(request,response);
+        if(StringUtils.isEmpty(token)){
+            chain.doFilter(request,response);
 
-                return;
-            }
-
-            Claims claim = JwtUtil.getClaimByToken(token);
-
-            if(claim == null || JwtUtil.isTokenExpired(claim)){
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-
-                ResultInfo resultInfo = ResultInfo.notLogin(Constant.NOT_LOGIN);
-
-                JsonUtil.writeValueAsString(resultInfo, response);
-
-                return;
-            }
-
-            String username = claim.getSubject();
-
-            log.info("用户---{},正在登录!",username);
-
-            //获取用户信息
-            Collection<? extends GrantedAuthority> authorities = SecurityUtil.getCurrentUserAuth().getAuthorities();
-
-            UsernamePasswordAuthenticationToken uPToken = new UsernamePasswordAuthenticationToken(username,null, authorities);
-
-            SecurityContextHolder.getContext().setAuthentication(uPToken);
-
-            chain.doFilter(request,response);  //放行
+            return;
         }
+
+        Claims claim = JwtUtil.getClaimByToken(token);
+
+        if(claim == null || JwtUtil.isTokenExpired(claim)){
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+
+            ResultInfo resultInfo = ResultInfo.notLogin(Constant.NOT_LOGIN);
+
+            JsonUtil.writeValueAsString(resultInfo, response);
+
+            return;
+        }
+
+        String username = claim.getSubject();
+
+        log.info("用户---{},正在登录!",username);
+
+        //获取用户信息
+        Collection<? extends GrantedAuthority> authorities = SecurityUtil.getCurrentUserAuth().getAuthorities();
+
+        UsernamePasswordAuthenticationToken uPToken = new UsernamePasswordAuthenticationToken(username,null, authorities);
+
+        SecurityContextHolder.getContext().setAuthentication(uPToken);
 
         chain.doFilter(request,response);  //放行
     }
