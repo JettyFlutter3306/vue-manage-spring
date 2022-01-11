@@ -15,7 +15,7 @@ import java.util.Map;
 @TableName("tb_goods")
 public class Goods { //商品类
 
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Integer goodsId; //商品id
 
     private String goodsName; //商品名称

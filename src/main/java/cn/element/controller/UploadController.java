@@ -17,9 +17,8 @@ public class UploadController {
 
     @PreAuthorize("hasAuthority('goods:update')")
     @PostMapping("/goodsPic")
-    public ResultInfo uploadGoodsPic(MultipartFile file){
-
-        if(file.isEmpty()){
+    public ResultInfo uploadGoodsPic(MultipartFile file) {
+        if (file.isEmpty()) {
             return ResultInfo.badRequest(Constant.UPLOAD_FAILED);
         }
 
@@ -30,7 +29,7 @@ public class UploadController {
 
         File destinationFile = new File(finalPathName);
 
-        if(!destinationFile.getParentFile().exists()){ //判断文件的父级目录是否存在
+        if (!destinationFile.getParentFile().exists()) { //判断文件的父级目录是否存在
             destinationFile.getParentFile().mkdirs();
         }
 
@@ -40,6 +39,6 @@ public class UploadController {
             e.printStackTrace();
         }
 
-        return ResultInfo.ok(Constant.UPLOAD_SUCCESS,finalPathName);
+        return ResultInfo.ok(Constant.UPLOAD_SUCCESS, finalPathName);
     }
 }

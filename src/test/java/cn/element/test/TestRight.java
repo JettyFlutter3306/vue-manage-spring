@@ -24,17 +24,14 @@ public class TestRight {
     private RoleService roleService;
 
     @Test
-    public void test01(){
-
+    public void test01() {
         List<Right> list = rightMapper.selectList(null);
 
         List<Right> list1 = list.stream().sorted(Comparator.comparing(Right::getLevel).reversed()).collect(Collectors.toList());
 
         Map<Integer,Right> map = new HashMap<>();
 
-        list1.forEach(r -> {
-            map.put(r.getId(),r);
-        });
+        list1.forEach(r -> map.put(r.getId(),r));
 
         for (Right right : list1) {
             if(map.containsKey(right.getParentId())){
@@ -48,18 +45,16 @@ public class TestRight {
     }
 
     @Test
-    public void test02(){
-
+    public void test02() {
         List<Right> idList = rightService.getRightIdAndPIdList();
 
         List<Integer> listByRightIdList = rightService.getCascadeListByRightId(101, new ArrayList<>(), idList);
 
-        listByRightIdList.forEach(System.out :: println);
+        listByRightIdList.forEach(System.out::println);
     }
 
     @Test
-    public void test03(){
-
+    public void test03() {
         List<Right> rightList = rightMapper.selectRightListByRoleId(42);
 
         rightList.forEach(System.out::println);

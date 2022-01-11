@@ -16,7 +16,7 @@ import java.util.List;
 @TableName("tb_report_1")
 public class Report {
 
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Integer id;
 
     private String rp1UserCount;//用户数量

@@ -34,7 +34,6 @@ public class JwtUtil {
      * 解析jwt
      */
     public static Claims getClaimByToken(String jwt) {
-
         try {
             return Jwts.parser()
                     .setSigningKey(TOKEN)

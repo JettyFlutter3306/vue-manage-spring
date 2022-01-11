@@ -33,27 +33,25 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     @Autowired
     private MyUserDetailsService myUserDetailsService;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager){
-
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain chain) throws IOException, ServletException {
         log.info("jwt 校验 filter");
-
         String token = request.getHeader(JwtUtil.HEADER);
 
-        if(StringUtils.isEmpty(token)){
+        if (StringUtils.isEmpty(token)) {
             chain.doFilter(request,response);
-
             return;
         }
 
         Claims claim = JwtUtil.getClaimByToken(token);
 
-        if(claim == null || JwtUtil.isTokenExpired(claim)){
+        if (claim == null || JwtUtil.isTokenExpired(claim)) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
             ResultInfo resultInfo = ResultInfo.notLogin(Constant.NOT_LOGIN);

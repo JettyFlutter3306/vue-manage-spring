@@ -13,7 +13,7 @@ import java.util.Date;
 @TableName("tb_order")
 public class Order {
 
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Integer orderId;//订单id
 
     private Integer userId;//会员id

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @TableName("tb_goods_attribute")
 public class GoodsAttribute {
 
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Integer id;
 
     private Integer goodsId;//商品的id

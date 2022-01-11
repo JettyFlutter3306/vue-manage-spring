@@ -22,11 +22,10 @@ public class AttributeController {
      */
     @PreAuthorize("hasAuthority('attribute:delete')")
     @DeleteMapping("/{attrId}")
-    public ResultInfo deleteAttributeById(@PathVariable("attrId") Integer attrId){
-
+    public ResultInfo deleteAttributeById(@PathVariable("attrId") Integer attrId) {
         boolean b = attributeService.deleteAttributeById(attrId);
 
-        if(b){
+        if (b) {
             return ResultInfo.ok(Constant.DELETE_SUCCESS);
         }
 
@@ -38,11 +37,10 @@ public class AttributeController {
      */
     @PreAuthorize("hasAuthority('attribute:select')")
     @GetMapping("/{attrId}")
-    public ResultInfo getAttributeValById(@PathVariable("attrId") Integer attrId){
-
+    public ResultInfo getAttributeValById(@PathVariable("attrId") Integer attrId) {
         Attribute attribute = attributeService.getAttrValById(attrId);
 
-        if(!StringUtils.isEmpty(attribute.getAttrVal())){
+        if (!StringUtils.isEmpty(attribute.getAttrVal())) {
             return ResultInfo.notFound(Constant.SELECT_FAILED);
         }
 

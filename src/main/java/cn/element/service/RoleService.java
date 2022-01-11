@@ -23,8 +23,7 @@ public class RoleService {
     @Autowired
     private RightService rightService;
 
-    public List<Role> getRoleList(){
-
+    public List<Role> getRoleList() {
         List<Role> roleList = roleMapper.selectList(null);
 
         for (Role role : roleList) {
@@ -38,11 +37,10 @@ public class RoleService {
      * 根据角色Id修改权限字符串
      */
     @Transactional
-    public boolean updateRightsByRoleId(Integer roleId, List<Integer> rids){
-
+    public boolean updateRightsByRoleId(Integer roleId, List<Integer> rids) {
         int j = rightMapper.deleteByRoleId(roleId);
 
-        if(CollectionUtils.isEmpty(rids)){
+        if (CollectionUtils.isEmpty(rids)) {
             return j != -1;
         }
 
@@ -54,11 +52,9 @@ public class RoleService {
     /**
      * 获取角色名称列表及id
      */
-    public List<Role> getRoleNameListAndId(){
-
+    public List<Role> getRoleNameListAndId() {
         QueryWrapper<Role> wrapper = new QueryWrapper<>();
-
-        wrapper.select("role_id","role_name");
+        wrapper.select("role_id", "role_name");
 
         return roleMapper.selectList(wrapper);
     }
@@ -67,7 +63,6 @@ public class RoleService {
      * 根据用户id获取角色列表
      */
     public List<Role> getRolesByUserId(Integer uid) {
-
         return roleMapper.selectRoleListByUID(uid);
     }
 
@@ -77,10 +72,9 @@ public class RoleService {
      */
     @Transactional
     public boolean updateRolesByUserId(Integer uid, List<Integer> roleIdList) {
-
         int i = roleMapper.deleteUserRoleById(uid);
 
-        if(CollectionUtils.isEmpty(roleIdList)){
+        if (CollectionUtils.isEmpty(roleIdList)) {
             return i != -1;
         }
 

@@ -15,7 +15,7 @@ import java.util.List;
 @TableName("tb_right")
 public class Right {
 
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Integer id;
 
     private String rightName; //权限名称

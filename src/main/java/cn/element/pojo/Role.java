@@ -15,7 +15,7 @@ import java.util.List;
 @TableName("tb_role")
 public class Role {
 
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Integer roleId;
 
     private String roleName; //角色名称

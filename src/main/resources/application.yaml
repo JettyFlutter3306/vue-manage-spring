@@ -2,15 +2,9 @@ server:
   port: 8081
 
 spring:
-  datasource:
-    username: root
-    password: root
-    url: jdbc:mysql://localhost:3306/vue_common_db?autoReconnect=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-    driver-class-name: com.mysql.jdbc.Driver
-
   #设置开发环境
   profiles:
-    active: dev
+    active: prod
 
   security:
     user:
@@ -31,5 +25,6 @@ mybatis-plus:
     db-config:
       logic-delete-value: 1
       logic-not-delete-value: 0
+      id-type: auto
 
   mapper-locations: classpath:mapper/**Mapper.xml

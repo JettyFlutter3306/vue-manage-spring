@@ -34,12 +34,12 @@ public class CategoryController {
     @GetMapping
     public ResultInfo getCategoryList(@RequestParam(value = "type",defaultValue = "3") Integer type,
                                       @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                      @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize){
+                                      @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize) {
 
         Page<Category> page = categoryService.getCategoryList(pageNum,pageSize);
 
-        if(!CollectionUtils.isEmpty(page.getRecords())){
-            return ResultInfo.ok(Constant.SELECT_SUCCESS,page);
+        if (!CollectionUtils.isEmpty(page.getRecords())) {
+            return ResultInfo.ok(Constant.SELECT_SUCCESS, page);
         }
 
         return ResultInfo.notFound(Constant.SELECT_FAILED);
@@ -98,11 +98,10 @@ public class CategoryController {
      */
     @PreAuthorize("hasAuthority('category:update')")
     @PutMapping
-    public ResultInfo editCategory(Category category){
-
+    public ResultInfo editCategory(Category category) {
         boolean b = categoryService.editCategory(category);
 
-        if(b){
+        if (b) {
             return ResultInfo.ok(Constant.UPDATE_SUCCESS);
         }
 
@@ -115,11 +114,10 @@ public class CategoryController {
      */
     @PreAuthorize("hasAuthority('category:delete')")
     @DeleteMapping("/{catId}")
-    public ResultInfo deleteCategory(@PathVariable("catId") Integer catId){
-
+    public ResultInfo deleteCategory(@PathVariable("catId") Integer catId) {
         boolean b = categoryService.deleteCategoryCascaded(catId);
 
-        if(b){
+        if (b) {
             return ResultInfo.ok(Constant.DELETE_SUCCESS);
         }
 
@@ -129,11 +127,10 @@ public class CategoryController {
     @PreAuthorize("hasAuthority('category:select')")
     @GetMapping("/{catId}/attributes")
     public ResultInfo getAttributesByCatId(@PathVariable("catId") Integer catId,
-                                           @RequestParam("sel") String sel){
-
+                                           @RequestParam("sel") String sel) {
         List<Attribute> list = attributeService.getAttributesByCatId(catId, sel);
 
-        if(!CollectionUtils.isEmpty(list)){
+        if (!CollectionUtils.isEmpty(list)) {
             return ResultInfo.ok(Constant.SELECT_SUCCESS,list);
         }
 
@@ -142,11 +139,10 @@ public class CategoryController {
 
     @PreAuthorize("hasAuthority('category:insert')")
     @PostMapping("/{catId}/attributes")
-    public ResultInfo addOneAttribute(Attribute attribute){
-
+    public ResultInfo addOneAttribute(Attribute attribute) {
         boolean b = attributeService.insertOneAttribute(attribute);
 
-        if(b){
+        if (b) {
             return ResultInfo.created(Constant.CREATED_SUCCESS);
         }
 
@@ -157,11 +153,10 @@ public class CategoryController {
     @GetMapping("/{catId}/attributes/{attrId}")
     public ResultInfo getCategoryAttrById(@PathVariable("catId") Integer catId,
                                           @PathVariable("attrId") Integer attrId,
-                                          @RequestParam("attrSel") String attrSel){
-
+                                          @RequestParam("attrSel") String attrSel) {
         Attribute attribute = attributeService.getAttributeById(catId, attrId, attrSel);
 
-        if(attribute != null){
+        if (attribute != null) {
             return ResultInfo.ok(Constant.SELECT_SUCCESS,attribute);
         }
 
@@ -176,11 +171,10 @@ public class CategoryController {
     @PreAuthorize("hasAuthority('category:update')")
     @PutMapping("/attributes/{attrId}")
     public ResultInfo editAttributeById(@PathVariable("attrId") Integer attrId,
-                                        @RequestParam("attrName") String attrName){
-
+                                        @RequestParam("attrName") String attrName) {
         boolean b = attributeService.editAttributeById(attrId, attrName);
 
-        if(b){
+        if (b) {
             return ResultInfo.ok(Constant.UPDATE_SUCCESS);
         }
 
@@ -195,11 +189,10 @@ public class CategoryController {
     @PreAuthorize("hasAuthority('category:update')")
     @PostMapping("/attributes/{attrId}")
     public ResultInfo editAttrValTagById(@PathVariable("attrId") Integer attrId,
-                                         @RequestParam("attrVal") String attrVal){
-
+                                         @RequestParam("attrVal") String attrVal) {
         boolean b = attributeService.updateAttributeByAttrVal(attrId, attrVal);
 
-        if(b){
+        if (b) {
             return ResultInfo.ok(Constant.UPDATE_SUCCESS);
         }
 

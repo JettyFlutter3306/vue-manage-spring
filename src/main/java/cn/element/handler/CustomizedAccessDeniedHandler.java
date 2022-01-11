@@ -18,8 +18,9 @@ import java.io.IOException;
 public class CustomizedAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException{
-
+    public void handle(HttpServletRequest request,
+                       HttpServletResponse response,
+                       AccessDeniedException e) throws IOException {
         ResultInfo resultInfo = ResultInfo.forbidden(Constant.ACCESS_DENIED);
 
         JsonUtil.writeValueAsString(resultInfo,response);

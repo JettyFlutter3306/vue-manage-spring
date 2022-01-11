@@ -16,8 +16,7 @@ public class TestReport {
     private ReportMapper reportMapper;
 
     @Test
-    public void test01(){
-
+    public void test01() {
         QueryWrapper<Report> wrapper = new QueryWrapper<>();
 
         wrapper.select("rp1_area").groupBy("rp1_area");
@@ -34,8 +33,7 @@ public class TestReport {
     }
 
     @Test
-    public void test02(){
-
+    public void test02() {
         List<Integer> list = reportMapper.selectUserCountByArea("华东");
         System.out.println("list = " + list);
     }

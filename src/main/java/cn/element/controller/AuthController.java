@@ -23,9 +23,8 @@ public class AuthController{
      */
     @PreAuthorize("hasAuthority('right:select')")
     @GetMapping
-    public ResultInfo getRightList(@RequestParam(value = "tree",defaultValue = "") String tree){
-
-        if(StringUtils.isEmpty(tree)){
+    public ResultInfo getRightList(@RequestParam(value = "tree",defaultValue = "") String tree) {
+        if (StringUtils.isEmpty(tree)) {
             List<Right> rightList = rightService.getRightList();
 
             return ResultInfo.ok(Constant.SELECT_SUCCESS,rightList);
@@ -41,8 +40,7 @@ public class AuthController{
      */
     @PreAuthorize("hasAuthority('right:select')")
     @GetMapping("/menus")
-    public ResultInfo getMenuList(){
-
+    public ResultInfo getMenuList() {
         List<Right> rightList = rightService.getRightListAsTree();
 
         return ResultInfo.ok(Constant.SELECT_SUCCESS,rightList);
@@ -51,12 +49,11 @@ public class AuthController{
     @PreAuthorize("hasAnyRole('超级管理员','管理员')")
     @GetMapping("/menus/{uid}")
     public ResultInfo getRightListById(@RequestParam(value = "tree",defaultValue = "") String tree,
-                                       @PathVariable("uid") Integer uid){
-
-        if(StringUtils.isEmpty(tree)){
+                                       @PathVariable("uid") Integer uid) {
+        if (StringUtils.isEmpty(tree)) {
             List<Right> rightList = rightService.getRightList();
 
-            return ResultInfo.ok(Constant.SELECT_SUCCESS,rightList);
+            return ResultInfo.ok(Constant.SELECT_SUCCESS, rightList);
         }
 
         List<Right> rightTree = rightService.getRightListAsTreeByUid(uid);

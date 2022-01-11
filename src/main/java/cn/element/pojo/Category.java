@@ -13,7 +13,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Category {
 
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Integer catId; //分类id
 
     private String catName; //分类名称

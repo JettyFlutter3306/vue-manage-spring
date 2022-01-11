@@ -15,15 +15,14 @@ public class TestDemo {
     private UserMapper userMapper;
 
     @Test
-    public void test01(){
-
+    public void test01() {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         System.out.println(encoder.encode("123456"));
     }
 
     @Test
-    public void test02(){
+    public void test02() {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq("username","洛必达");
 

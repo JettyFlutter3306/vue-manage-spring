@@ -23,11 +23,10 @@ public class ReportController {
 
     @PreAuthorize("hasAuthority('report:select')")
     @GetMapping("/type/{number}")
-    public ResultInfo getReportData(@PathVariable("number") Integer number){
-
+    public ResultInfo getReportData(@PathVariable("number") Integer number) {
         List<Report> list = reportService.getReportsByTypeNumber(number);
 
-        if(!CollectionUtils.isEmpty(list)){
+        if (!CollectionUtils.isEmpty(list)) {
             return ResultInfo.ok(Constant.SELECT_SUCCESS,list);
         }
 

@@ -11,7 +11,6 @@ public class JsonUtil {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static void writeValueAsString(Object obj, HttpServletResponse response) throws IOException {
-
         String json = objectMapper.writeValueAsString(obj);
 
         response.setContentType("application/json;charset=utf-8");

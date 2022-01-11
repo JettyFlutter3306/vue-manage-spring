@@ -24,11 +24,10 @@ public class OrderController {
     @GetMapping
     public ResultInfo getOrderList(@RequestParam("pageNum") Integer pageNum,
                                    @RequestParam("pageSize") Integer pageSize,
-                                   @RequestParam("query") String query){
-
+                                   @RequestParam("query") String query) {
         Page<Order> page = orderService.getOrderList(pageNum, pageSize, query);
 
-        if(!CollectionUtils.isEmpty(page.getRecords())){
+        if (!CollectionUtils.isEmpty(page.getRecords())) {
             return ResultInfo.ok(Constant.SELECT_SUCCESS,page);
         }
 

@@ -8,16 +8,14 @@ public class SecurityUtil {
     /**
      * 获取当前用户
      */
-    public static Authentication getCurrentUserAuth(){
-
+    public static Authentication getCurrentUserAuth() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
     /**
      * 获取当前用户
      */
-    public static Object getCurrentPrinciple(){
-
+    public static Object getCurrentPrinciple() {
         return getCurrentUserAuth().getPrincipal();
     }
 }

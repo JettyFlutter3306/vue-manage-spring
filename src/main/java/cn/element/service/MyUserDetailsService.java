@@ -37,13 +37,12 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         log.info(username);
 
         //查询用户
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper
-                .eq("username",username)
+                .eq("username", username)
                 .eq("status", User.USER_STATUS_ON);
 
         User user = userMapper.selectOne(wrapper);

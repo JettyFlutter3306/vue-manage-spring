@@ -30,11 +30,10 @@ public class RoleController {
      */
     @PreAuthorize("hasAuthority('role:select')")
     @GetMapping("/roleName")
-    public ResultInfo getRoleNameList(){
-
+    public ResultInfo getRoleNameList() {
         List<Role> roleList = roleService.getRoleNameListAndId();
 
-        return ResultInfo.ok(SELECT_SUCCESS,roleList);
+        return ResultInfo.ok(SELECT_SUCCESS, roleList);
     }
 
     /**
@@ -42,38 +41,35 @@ public class RoleController {
      */
     @PreAuthorize("hasAuthority('role:select')")
     @GetMapping
-    public ResultInfo getRoleList(){
-
+    public ResultInfo getRoleList() {
         List<Role> roleList = roleService.getRoleList();
 
-        if(CollectionUtils.isEmpty(roleList)){
+        if (CollectionUtils.isEmpty(roleList)) {
             return ResultInfo.notFound();
         }
 
         return ResultInfo.ok(SELECT_SUCCESS,roleList);
     }
 
-    @PreAuthorize("hasAuthority({'role:select','right:select'})")
+    @PreAuthorize("hasAuthority({'role:select', 'right:select'})")
     @GetMapping("/rights/{id}")
-    public ResultInfo getRightListByRoleId(@PathVariable("id") Integer roleId){
-
+    public ResultInfo getRightListByRoleId(@PathVariable("id") Integer roleId) {
         List<Right> list = rightService.getRightListAsTree(roleId);
 
-        if(CollectionUtils.isEmpty(list)){
+        if (CollectionUtils.isEmpty(list)) {
             return ResultInfo.notFound(Constant.SELECT_FAILED);
         }
 
-        return ResultInfo.ok(SELECT_SUCCESS,list);
+        return ResultInfo.ok(SELECT_SUCCESS, list);
     }
 
-    @PreAuthorize("hasAuthority({'role:update','right:update'})")
+    @PreAuthorize("hasAuthority({'role:update'})")
     @PostMapping("/{roleId}")
     public ResultInfo updateRightsByRoleId(@PathVariable("roleId") Integer roleId,
-                                           @RequestBody List<Integer> rids){
-
+                                           @RequestBody List<Integer> rids) {
         boolean b = roleService.updateRightsByRoleId(roleId, rids);
 
-        if(b){
+        if (b) {
             return ResultInfo.ok(ALLOT_RIGHTS_SUCCESS);
         }
 
@@ -83,7 +79,6 @@ public class RoleController {
     @PreAuthorize("hasAuthority('role:select')")
     @GetMapping("/user/{uid}")
     public ResultInfo getRolesByUserId(@PathVariable("uid") Integer uid) {
-
         List<Role> roleList = roleService.getRolesByUserId(uid);
 
         return ResultInfo.ok(SELECT_SUCCESS, roleList);
@@ -93,10 +88,9 @@ public class RoleController {
     @PostMapping("/allot/{uid}")
     public ResultInfo updateRolesByUserId(@PathVariable("uid") Integer uid,
                                           @RequestBody List<Integer> roleIdList) {
-
         boolean b = roleService.updateRolesByUserId(uid, roleIdList);
 
-        if(b){
+        if (b) {
             return ResultInfo.ok(ALLOT_ROLE_SUCCESS);
         }
 

@@ -21,7 +21,7 @@ public class User {
     public static final int USER_STATUS_ON = 1;
     public static final int USER_STATUS_OFF = 0;
 
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Integer id;
 
     @NotBlank(message="用户名不能为空")
