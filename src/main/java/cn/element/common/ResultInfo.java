@@ -47,7 +47,6 @@ public class ResultInfo {
 
     public static ResultInfo notFound(String msg) {
         ResultInfo resultInfo = new ResultInfo(msg);
-
         resultInfo.setCode(HttpStatus.NOT_FOUND.value());
 
         return resultInfo;
@@ -59,7 +58,6 @@ public class ResultInfo {
 
     public static ResultInfo created(String msg) {
         ResultInfo resultInfo = new ResultInfo(msg);
-
         resultInfo.setCode(HttpStatus.CREATED.value());
 
         return resultInfo;
@@ -67,7 +65,6 @@ public class ResultInfo {
 
     public static ResultInfo serverError(String msg) {
         ResultInfo resultInfo = new ResultInfo(msg);
-
         resultInfo.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 
         return resultInfo;
@@ -79,7 +76,6 @@ public class ResultInfo {
 
     public static ResultInfo forbidden(String msg) {
         ResultInfo resultInfo = new ResultInfo(msg);
-
         resultInfo.setCode(HttpStatus.FORBIDDEN.value());
 
         return resultInfo;
@@ -91,7 +87,6 @@ public class ResultInfo {
 
     public static ResultInfo badRequest(String msg) {
         ResultInfo resultInfo = new ResultInfo(msg);
-
         resultInfo.setCode(HttpStatus.BAD_REQUEST.value());
 
         return resultInfo;
@@ -99,7 +94,6 @@ public class ResultInfo {
 
     public static ResultInfo notLogin(String msg) {
         ResultInfo resultInfo = new ResultInfo(msg);
-
         resultInfo.setCode(HttpStatus.UNAUTHORIZED.value());
 
         return resultInfo;

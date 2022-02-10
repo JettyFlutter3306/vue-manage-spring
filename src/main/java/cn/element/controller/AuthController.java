@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/right")
-public class AuthController{
+public class AuthController {
 
     @Autowired
     private RightService rightService;
@@ -23,16 +23,16 @@ public class AuthController{
      */
     @PreAuthorize("hasAuthority('right:select')")
     @GetMapping
-    public ResultInfo getRightList(@RequestParam(value = "tree",defaultValue = "") String tree) {
+    public ResultInfo getRightList(@RequestParam(value = "tree", defaultValue = "") String tree) {
         if (StringUtils.isEmpty(tree)) {
             List<Right> rightList = rightService.getRightList();
 
-            return ResultInfo.ok(Constant.SELECT_SUCCESS,rightList);
+            return ResultInfo.ok(Constant.SELECT_SUCCESS, rightList);
         }
 
         List<Right> rightTree = rightService.getRightListAsTree();
 
-        return ResultInfo.ok(Constant.SELECT_SUCCESS,rightTree);
+        return ResultInfo.ok(Constant.SELECT_SUCCESS, rightTree);
     }
 
     /**
@@ -43,12 +43,12 @@ public class AuthController{
     public ResultInfo getMenuList() {
         List<Right> rightList = rightService.getRightListAsTree();
 
-        return ResultInfo.ok(Constant.SELECT_SUCCESS,rightList);
+        return ResultInfo.ok(Constant.SELECT_SUCCESS, rightList);
     }
 
-    @PreAuthorize("hasAnyRole('超级管理员','管理员')")
+    @PreAuthorize("hasAnyRole('超级管理员', '管理员')")
     @GetMapping("/menus/{uid}")
-    public ResultInfo getRightListById(@RequestParam(value = "tree",defaultValue = "") String tree,
+    public ResultInfo getRightListById(@RequestParam(value = "tree", defaultValue = "") String tree,
                                        @PathVariable("uid") Integer uid) {
         if (StringUtils.isEmpty(tree)) {
             List<Right> rightList = rightService.getRightList();
@@ -58,7 +58,7 @@ public class AuthController{
 
         List<Right> rightTree = rightService.getRightListAsTreeByUid(uid);
 
-        return ResultInfo.ok(Constant.SELECT_SUCCESS,rightTree);
+        return ResultInfo.ok(Constant.SELECT_SUCCESS, rightTree);
     }
 
 }

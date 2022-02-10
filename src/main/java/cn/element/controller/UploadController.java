@@ -22,10 +22,10 @@ public class UploadController {
             return ResultInfo.badRequest(Constant.UPLOAD_FAILED);
         }
 
-        String fileName = file.getOriginalFilename();  //获取文件件的名称
-        String suffixName = fileName.substring(fileName.lastIndexOf(".")); //后缀名称
-        String filePath = "E:/ProgramSoftware/MaterialLibrary/temp/";//上传路径
-        String finalPathName = filePath + System.currentTimeMillis() + suffixName; //最终的文件的路径
+        String fileName = file.getOriginalFilename();  // 获取文件件的名称
+        String suffixName = fileName.substring(fileName.lastIndexOf(".")); // 后缀名称
+        String filePath = "E:/ProgramSoftware/MaterialLibrary/temp/";  // 上传路径
+        String finalPathName = filePath + System.currentTimeMillis() + suffixName; // 最终的文件的路径
 
         File destinationFile = new File(finalPathName);
 

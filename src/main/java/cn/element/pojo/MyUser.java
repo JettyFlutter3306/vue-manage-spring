@@ -10,7 +10,6 @@ public class MyUser extends User {
     private Integer userId;
 
     public MyUser(Integer userId, String username, String password, Collection<? extends GrantedAuthority> authorities) {
-
         super(username, password, authorities);
 
         this.userId = userId;

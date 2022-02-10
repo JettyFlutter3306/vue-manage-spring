@@ -31,6 +31,6 @@ public class OrderController {
             return ResultInfo.ok(Constant.SELECT_SUCCESS,page);
         }
 
-        return ResultInfo.serverError(Constant.SYSTEM_ERROR);
+        return ResultInfo.notFound(Constant.SYSTEM_ERROR);
     }
 }

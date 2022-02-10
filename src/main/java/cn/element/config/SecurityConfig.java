@@ -46,12 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    //白名单
-    public static final String[] URL_WHITE_LIST = {"/","/userLogin","logout"};
+    // 白名单
+    public static final String[] URL_WHITE_LIST = {"/", "/userLogin", "logout"};
 
     @Bean
-    public JdbcTokenRepositoryImpl getJdbcTokenRepositoryImpl(){
-
+    public JdbcTokenRepositoryImpl getJdbcTokenRepositoryImpl() {
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         jdbcTokenRepository.setDataSource(dataSource);
 
@@ -59,8 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception{
-
+    public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
         return new JwtAuthenticationFilter(this.authenticationManager());
     }
 
@@ -70,22 +68,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.authorizeRequests()
-                .antMatchers(URL_WHITE_LIST).permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .and()
-                .addFilter(this.jwtAuthenticationFilter());
+            .antMatchers(URL_WHITE_LIST).permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .exceptionHandling()
+            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+            .and()
+            .addFilter(this.jwtAuthenticationFilter());
 
         http.formLogin()
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .loginProcessingUrl("/userLogin")
-                .successHandler(successHandler)
-                .failureHandler(failureHandler);
+            .usernameParameter("username")
+            .passwordParameter("password")
+            .loginProcessingUrl("/userLogin")
+            .successHandler(successHandler)
+            .failureHandler(failureHandler);
 
         http.logout().logoutSuccessUrl("/");
 
@@ -93,7 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors();
 
         http.exceptionHandling()            //自定义权限不足处理器
-                .accessDeniedHandler(accessDeniedHandler);
+            .accessDeniedHandler(accessDeniedHandler);
 
         http.addFilterAt(customizedAuthFilter(), UsernamePasswordAuthenticationFilter.class);
     }
@@ -114,7 +111,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     protected CustomizedAuthFilter customizedAuthFilter() throws Exception {
-
         CustomizedAuthFilter filter = new CustomizedAuthFilter();
 
         filter.setAuthenticationManager(authenticationManagerBean());

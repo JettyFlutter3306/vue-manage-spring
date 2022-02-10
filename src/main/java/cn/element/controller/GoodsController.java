@@ -19,9 +19,10 @@ public class GoodsController {
 
     @PreAuthorize("hasAuthority('goods:select')")
     @GetMapping
-    public ResultInfo getGoodsList(@RequestParam(value = "query",defaultValue = "") String keyword,
-                                   @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
-                                   @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize) {
+    public ResultInfo getGoodsList(
+            @RequestParam(value = "query",defaultValue = "") String keyword,
+            @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
+            @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize) {
         Page<Goods> page = goodsService.getGoodsList(pageNum, pageSize, keyword);
 
         if (!CollectionUtils.isEmpty(page.getRecords())) {
