@@ -292,5 +292,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 ## 3.9 通过内置login页面登录
 
-![1644826047427](assets/image/security-login.png)
+![1644826509094](assets/image/security-login.png)
 
