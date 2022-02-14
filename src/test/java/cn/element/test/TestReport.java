@@ -1,7 +1,7 @@
 package cn.element.test;
 
 import cn.element.mapper.ReportMapper;
-import cn.element.pojo.Report;
+import cn.element.pojo.common.Report;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

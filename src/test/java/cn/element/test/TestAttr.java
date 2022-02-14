@@ -1,6 +1,6 @@
 package cn.element.test;
 
-import cn.element.pojo.Attribute;
+import cn.element.pojo.common.Attribute;
 import cn.element.service.AttributeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

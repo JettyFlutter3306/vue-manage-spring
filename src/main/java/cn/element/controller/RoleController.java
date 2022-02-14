@@ -2,8 +2,8 @@ package cn.element.controller;
 
 import cn.element.common.Constant;
 import cn.element.common.ResultInfo;
-import cn.element.pojo.Right;
-import cn.element.pojo.Role;
+import cn.element.pojo.permission.Right;
+import cn.element.pojo.permission.Role;
 import cn.element.service.RightService;
 import cn.element.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;

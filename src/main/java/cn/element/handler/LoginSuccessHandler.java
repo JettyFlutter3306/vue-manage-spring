@@ -2,7 +2,7 @@ package cn.element.handler;
 
 import cn.element.common.Constant;
 import cn.element.common.ResultInfo;
-import cn.element.pojo.MyUser;
+import cn.element.pojo.security.MyUser;
 import cn.element.util.JsonUtil;
 import cn.element.util.JwtUtil;
 import cn.element.util.SecurityUtil;

@@ -1,7 +1,7 @@
 package cn.element.service;
 
 import cn.element.mapper.UserMapper;
-import cn.element.pojo.User;
+import cn.element.pojo.permission.User;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

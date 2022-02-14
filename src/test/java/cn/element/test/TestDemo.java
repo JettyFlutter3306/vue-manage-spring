@@ -1,7 +1,7 @@
 package cn.element.test;
 
 import cn.element.mapper.UserMapper;
-import cn.element.pojo.User;
+import cn.element.pojo.permission.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

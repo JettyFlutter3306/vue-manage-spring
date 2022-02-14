@@ -1,4 +1,4 @@
-package cn.element.pojo;
+package cn.element.pojo.common;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonInclude;

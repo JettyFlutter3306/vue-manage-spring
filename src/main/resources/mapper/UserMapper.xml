@@ -4,19 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.element.mapper.UserMapper">
-    <resultMap type="cn.element.pojo.User" id="baseMapper">
+    <resultMap type="cn.element.pojo.permission.User" id="baseMapper">
         <id column="id" property="id"/>
         <collection
                 property="roleList"
                 javaType="java.util.ArrayList"
-                ofType="cn.element.pojo.Role"
+                ofType="cn.element.pojo.permission.Role"
                 select="cn.element.mapper.UserMapper.selectRoleListByUid"
                 column="user_id = id"
         >
         </collection>
     </resultMap>
 
-    <select id="selectRoleListByUid" resultType="cn.element.pojo.Role">
+    <select id="selectRoleListByUid" resultType="cn.element.pojo.permission.Role">
         select
             a.role_name
         from

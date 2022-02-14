@@ -1,6 +1,6 @@
 package cn.element.test;
 
-import cn.element.pojo.Category;
+import cn.element.pojo.common.Category;
 import cn.element.service.CategoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package cn.element.mapper;
 
-import cn.element.pojo.Order;
+import cn.element.pojo.common.Order;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

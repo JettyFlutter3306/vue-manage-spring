@@ -1,9 +1,8 @@
 package cn.element.mapper;
 
-import cn.element.pojo.Right;
+import cn.element.pojo.permission.Right;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 

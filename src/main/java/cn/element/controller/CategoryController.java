@@ -2,8 +2,8 @@ package cn.element.controller;
 
 import cn.element.common.Constant;
 import cn.element.common.ResultInfo;
-import cn.element.pojo.Attribute;
-import cn.element.pojo.Category;
+import cn.element.pojo.common.Attribute;
+import cn.element.pojo.common.Category;
 import cn.element.service.AttributeService;
 import cn.element.service.CategoryService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

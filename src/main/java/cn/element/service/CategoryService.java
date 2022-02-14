@@ -1,7 +1,7 @@
 package cn.element.service;
 
 import cn.element.mapper.CategoryMapper;
-import cn.element.pojo.Category;
+import cn.element.pojo.common.Category;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;

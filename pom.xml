@@ -8,9 +8,9 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.7.RELEASE</version>
+        <relativePath/>
     </parent>
 
-    <!--element是信仰!-->
     <groupId>cn.element</groupId>
     <artifactId>vue-manage-spring</artifactId>
     <version>1.0.0-RELEASE</version>
@@ -20,7 +20,6 @@
     </properties>
 
     <dependencies>
-
         <!--web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,6 +1,6 @@
 package cn.element.mapper;
 
-import cn.element.pojo.Goods;
+import cn.element.pojo.common.Goods;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Select;
 

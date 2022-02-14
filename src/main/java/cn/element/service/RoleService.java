@@ -2,7 +2,7 @@ package cn.element.service;
 
 import cn.element.mapper.RightMapper;
 import cn.element.mapper.RoleMapper;
-import cn.element.pojo.Role;
+import cn.element.pojo.permission.Role;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

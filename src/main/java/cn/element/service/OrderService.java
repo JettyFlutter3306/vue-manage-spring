@@ -1,7 +1,7 @@
 package cn.element.service;
 
 import cn.element.mapper.OrderMapper;
-import cn.element.pojo.Order;
+import cn.element.pojo.common.Order;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;

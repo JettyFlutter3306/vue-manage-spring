@@ -2,7 +2,7 @@ package cn.element.controller;
 
 import cn.element.common.Constant;
 import cn.element.common.ResultInfo;
-import cn.element.pojo.Report;
+import cn.element.pojo.common.Report;
 import cn.element.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

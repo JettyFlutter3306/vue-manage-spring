@@ -1,7 +1,7 @@
 package cn.element.service;
 
 import cn.element.mapper.ReportMapper;
-import cn.element.pojo.Report;
+import cn.element.pojo.common.Report;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

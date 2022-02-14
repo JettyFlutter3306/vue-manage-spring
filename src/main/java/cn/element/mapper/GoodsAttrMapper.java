@@ -1,6 +1,6 @@
 package cn.element.mapper;
 
-import cn.element.pojo.GoodsAttribute;
+import cn.element.pojo.common.GoodsAttribute;
 
 /**
  * 商品表和参数表的中间关联表

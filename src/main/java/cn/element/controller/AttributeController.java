@@ -2,7 +2,7 @@ package cn.element.controller;
 
 import cn.element.common.Constant;
 import cn.element.common.ResultInfo;
-import cn.element.pojo.Attribute;
+import cn.element.pojo.common.Attribute;
 import cn.element.service.AttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,7 +1,7 @@
 package cn.element.service;
 
 import cn.element.mapper.AttributeMapper;
-import cn.element.pojo.Attribute;
+import cn.element.pojo.common.Attribute;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;

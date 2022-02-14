@@ -1,7 +1,7 @@
 package cn.element.test;
 
 import cn.element.mapper.UserMapper;
-import cn.element.pojo.User;
+import cn.element.pojo.permission.User;
 import cn.element.service.UserService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.jupiter.api.Test;

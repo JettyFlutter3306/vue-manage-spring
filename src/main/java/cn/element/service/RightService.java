@@ -1,7 +1,7 @@
 package cn.element.service;
 
 import cn.element.mapper.RightMapper;
-import cn.element.pojo.Right;
+import cn.element.pojo.permission.Right;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package cn.element.test;
 
 import cn.element.mapper.RightMapper;
-import cn.element.pojo.Right;
+import cn.element.pojo.permission.Right;
 import cn.element.service.RightService;
 import cn.element.service.RoleService;
 import org.junit.jupiter.api.Test;

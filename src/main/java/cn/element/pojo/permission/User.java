@@ -1,9 +1,11 @@
-package cn.element.pojo;
+package cn.element.pojo.permission;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Pattern;
@@ -15,6 +17,8 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Accessors(chain = true)
 @TableName("tb_user")
 public class User {
 
@@ -43,6 +47,4 @@ public class User {
 
     @TableField(exist = false)
     private List<Role> roleList;
-
-
 }

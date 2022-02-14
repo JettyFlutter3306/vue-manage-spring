@@ -1,6 +1,6 @@
 package cn.element.mapper;
 
-import cn.element.pojo.User;
+import cn.element.pojo.permission.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
