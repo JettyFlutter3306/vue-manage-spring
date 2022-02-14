@@ -154,22 +154,24 @@ public class Right {
 ## 3.5 导入依赖
 
 ```xml
-<!--mybatis-plus-->
 <dependency>
-    <groupId>com.baomidou</groupId>
-    <artifactId>mybatis-plus-boot-starter</artifactId>
-    <version>3.0.5</version>
-</dependency>
-<!--SpringSecurity-->
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-security</artifactId>
-</dependency>
-<!-- HuTool工具类-->
-<dependency>
-    <groupId>cn.hutool</groupId>
-    <artifactId>hutool-all</artifactId>
-    <version>5.3.3</version>
+    <!--mybatis-plus-->
+    <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>3.0.5</version>
+    </dependency>
+    <!--SpringSecurity-->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <!-- HuTool工具类-->
+    <dependency>
+        <groupId>cn.hutool</groupId>
+        <artifactId>hutool-all</artifactId>
+        <version>5.3.3</version>
+    </dependency>
 </dependency>
 ```
 
