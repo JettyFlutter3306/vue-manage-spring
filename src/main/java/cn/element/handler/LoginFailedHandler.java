@@ -17,8 +17,7 @@ public class LoginFailedHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
-
-        ResultInfo resultInfo = ResultInfo.badRequest(Constant.LOGIN_FAILED);;
+        ResultInfo resultInfo = ResultInfo.badRequest(Constant.LOGIN_FAILED);
 
         JsonUtil.writeValueAsString(resultInfo,response);
     }

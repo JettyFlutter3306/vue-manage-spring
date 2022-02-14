@@ -2,7 +2,7 @@ package cn.element.handler;
 
 import cn.element.common.Constant;
 import cn.element.common.ResultInfo;
-import cn.element.pojo.security.MyUser;
+import cn.element.security.IUser;
 import cn.element.util.JsonUtil;
 import cn.element.util.JwtUtil;
 import cn.element.util.SecurityUtil;
@@ -23,23 +23,21 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException {
-
-        MyUser myUser = (MyUser) SecurityUtil.getCurrentPrinciple();
+        IUser myUser = (IUser) SecurityUtil.getCurrentPrinciple();
 
         String username = myUser.getUsername();
-
         String tokenName = JwtUtil.getToken(username);
 
-        ResultInfo resultInfo = ResultInfo.ok(Constant.LOGIN_SUCCESS,
-                MapUtil.builder()
-                        .put("username",myUser.getUsername())
-                        .put("userId", myUser.getUserId())
-                        .put("Authorization",tokenName).build()
-        );
+        ResultInfo resultInfo = ResultInfo.ok(
+                                    Constant.LOGIN_SUCCESS,
+                                    MapUtil.builder()
+                                           .put("username", myUser.getUsername())
+                                           .put("userId", myUser.getUserId())
+                                           .put("Authorization", tokenName).build()
+                                );
 
-        JsonUtil.writeValueAsString(resultInfo,response);
-
-        log.info("token --- {}",tokenName);
+        JsonUtil.writeValueAsString(resultInfo, response);
+        log.info("token --- {}", tokenName);
     }
 
 

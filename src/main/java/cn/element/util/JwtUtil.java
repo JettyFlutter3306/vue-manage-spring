@@ -17,17 +17,16 @@ public class JwtUtil {
 
     // 生成jwt
     public static String getToken(String username) {
-
         Date nowDate = new Date();
         Date expireDate = new Date(nowDate.getTime() + 1000 * EXPIRED_TIME);
 
         return Jwts.builder()
-                .setHeaderParam("typ", "JWT")
-                .setSubject(username)
-                .setIssuedAt(nowDate)
-                .setExpiration(expireDate)// 7天过期
-                .signWith(SignatureAlgorithm.HS512, TOKEN)
-                .compact();
+                   .setHeaderParam("typ", "JWT")
+                   .setSubject(username)
+                   .setIssuedAt(nowDate)
+                   .setExpiration(expireDate)// 7天过期
+                   .signWith(SignatureAlgorithm.HS512, TOKEN)
+                   .compact();
     }
 
     /**
@@ -36,9 +35,9 @@ public class JwtUtil {
     public static Claims getClaimByToken(String jwt) {
         try {
             return Jwts.parser()
-                    .setSigningKey(TOKEN)
-                    .parseClaimsJws(jwt)
-                    .getBody();
+                       .setSigningKey(TOKEN)
+                       .parseClaimsJws(jwt)
+                       .getBody();
         } catch (Exception e) {
             return null;
         }
@@ -48,7 +47,6 @@ public class JwtUtil {
      * jwt是否过期
      */
     public static boolean isTokenExpired(Claims claims) {
-
         return claims.getExpiration().before(new Date());
     }
 

@@ -28,26 +28,43 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /**
+     * 成功登录的处理器
+     */
     @Autowired
-    private AuthenticationSuccessHandler successHandler;//成功登录的处理器
+    private AuthenticationSuccessHandler successHandler;
 
+    /**
+     * 登录失败的处理器
+     */
     @Autowired
-    private AuthenticationFailureHandler failureHandler;//登录失败的处理器
+    private AuthenticationFailureHandler failureHandler;
 
+    /**
+     * 权限不足处理器
+     */
     @Autowired
-    private AccessDeniedHandler accessDeniedHandler;//权限不足处理器
+    private AccessDeniedHandler accessDeniedHandler;
 
+    /**
+     * 数据源
+     */
     @Autowired
-    private DataSource dataSource;  //数据源
+    private DataSource dataSource;
 
+    /**
+     * 自定义的用户细节service
+     */
     @Autowired
-    private UserDetailsService userDetailsService;  //自定义的用户细节service
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    // 白名单
-    public static final String[] URL_WHITE_LIST = {"/", "/userLogin", "logout"};
+    /**
+     * 白名单
+     */
+    public static final String[] URL_WHITE_LIST = {"/", "/userLogin", "/logout"};
 
     @Bean
     public JdbcTokenRepositoryImpl getJdbcTokenRepositoryImpl() {
@@ -97,7 +114,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 //
         //从内存中读取
@@ -112,7 +128,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected CustomizedAuthFilter customizedAuthFilter() throws Exception {
         CustomizedAuthFilter filter = new CustomizedAuthFilter();
-
         filter.setAuthenticationManager(authenticationManagerBean());
 
         return filter;

@@ -151,3 +151,144 @@ public class Right {
 }
 ```
 
+## 3.5 导入依赖
+
+```xml
+<!--mybatis-plus-->
+<dependency>
+    <groupId>com.baomidou</groupId>
+    <artifactId>mybatis-plus-boot-starter</artifactId>
+    <version>3.0.5</version>
+</dependency>
+<!--SpringSecurity-->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+<!-- HuTool工具类-->
+<dependency>
+    <groupId>cn.hutool</groupId>
+    <artifactId>hutool-all</artifactId>
+    <version>5.3.3</version>
+</dependency>
+```
+
+## 3.6 自定义IUser
+
+自定义**IUser**继承**SpringSecurity**提供的User类,重写构造器.或者你直接使用**SpringSecurity**的**User**类,我这里只不过是为了扩充自定义的**User**的功能.
+
+```java
+public class IUser extends User {
+
+    private Integer userId;
+
+    public IUser(Integer userId, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+        super(username, password, authorities);
+        this.userId = userId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+}
+```
+
+## 3.7 自定义IUserDetailsService
+
+自定义**IUserDetailsService**实现**SpringSecuirty**提供的**UserDetailsService**,
+
+重写loadUserByUsername(String  username)方法,在这个方法中定义查询用户以及用户的角色,角色对应的权限逻7辑.
+
+```java
+@Service
+public class IUserDetailsService implements UserDetailsService {
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
+
+    @Autowired
+    private RightMapper rightMapper;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // 查询用户
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("username", username)
+               .eq("status", User.USER_STATUS_ON);
+
+        User user = userMapper.selectOne(wrapper);
+
+        if (user != null) {
+            // 声明一个权限集合
+            List<GrantedAuthority> authorityList = new ArrayList<>();
+
+            // 查询用户的角色
+            List<Role> roleList = roleMapper.selectRoleListByUID(user.getId());
+
+            if (!CollectionUtils.isEmpty(roleList)) {
+                for (Role role : roleList) {
+                    //创建权限对象
+                    GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getRoleName());
+                    authorityList.add(authority);
+                }
+            }
+
+            //查询用户的权限
+            List<Right> rightList = rightMapper.selectRightListByUID(user.getId());
+
+            if (!CollectionUtils.isEmpty(rightList)) {
+                for (Right right : rightList) {
+                    if (!StringUtils.isEmpty(right.getIdentity())) {
+                        //创建权限对象
+                        GrantedAuthority authority = new SimpleGrantedAuthority(right.getIdentity());
+                        authorityList.add(authority);
+                    }
+                }
+            }
+
+            log.info("用户ID ----{} ---- 拥有的权限: {}", user.getId(), authorityList);
+            return new IUser(user.getId(), user.getUsername(), user.getPassword(), authorityList);
+        }
+
+        return null;
+    }
+}
+```
+
+
+
+## 3.8 配置SecurityConfig
+
+定义SecurityConfig配置类继承WebSecurityConfigurerAdapter类,这个类由SpringSecurity提供.重写
+
+```java
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    
+    /**
+     * 自定义的用户细节service
+     */
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        
+        auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
+    }
+}
+```
+
+
+
+## 3.9 通过内置login页面登录
+
+![1644826047427](assets/image/security-login.png)
+

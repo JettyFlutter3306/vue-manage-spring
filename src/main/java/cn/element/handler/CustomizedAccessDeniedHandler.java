@@ -23,6 +23,6 @@ public class CustomizedAccessDeniedHandler implements AccessDeniedHandler {
                        AccessDeniedException e) throws IOException {
         ResultInfo resultInfo = ResultInfo.forbidden(Constant.ACCESS_DENIED);
 
-        JsonUtil.writeValueAsString(resultInfo,response);
+        JsonUtil.writeValueAsString(resultInfo, response);
     }
 }

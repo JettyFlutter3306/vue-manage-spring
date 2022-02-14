@@ -20,14 +20,14 @@
         select
             a.role_name
         from
-            `tb_role` a
+            `tb_role` as a
         where
             a.role_id
         in
             (select
                 b.role_id
              from
-                `inner_user_role` b
+                `inner_user_role` as b
              where
                 user_id = #{user_id})
     </select>

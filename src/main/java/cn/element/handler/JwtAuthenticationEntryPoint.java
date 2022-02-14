@@ -27,7 +27,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                          AuthenticationException e) throws IOException {
         log.info("认证失败!未登录!");
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-
         ResultInfo resultInfo = ResultInfo.notLogin(NOT_LOGIN);
 
         JsonUtil.writeValueAsString(resultInfo,response);

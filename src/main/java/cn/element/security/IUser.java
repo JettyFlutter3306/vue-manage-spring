@@ -1,17 +1,16 @@
-package cn.element.pojo.security;
+package cn.element.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 
-public class MyUser extends User {
+public class IUser extends User {
 
     private Integer userId;
 
-    public MyUser(Integer userId, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public IUser(Integer userId, String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
-
         this.userId = userId;
     }
 

@@ -1,5 +1,6 @@
 package cn.element.mapper;
 
+import cn.element.pojo.permission.Role;
 import cn.element.pojo.permission.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,6 +17,8 @@ public interface UserMapper extends BaseMapper<User> {
     List<User> selectUserList(@Param("keyword") String keyword,
                               @Param("pageNum") Integer pageNum,
                               @Param("pageSize") Integer pageSize);
+
+    List<Role> selectRoleListByUid(@Param("user_id") Integer userId);
 
 
 
