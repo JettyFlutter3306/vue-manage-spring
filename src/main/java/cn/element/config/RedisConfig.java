@@ -20,18 +20,18 @@ public class RedisConfig {
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 
         //配置具体的序列化方式
-        Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        ObjectMapper objectMapper = new ObjectMapper();
+        Jackson2JsonRedisSerializer<Object> jacksonSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
 
-        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        serializer.setObjectMapper(objectMapper);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+//        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+//        serializer.setObjectMapper(objectMapper);
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
 
         redisTemplate.setKeySerializer(stringRedisSerializer);  //key采用String序列化的方式
         redisTemplate.setHashKeySerializer(stringRedisSerializer);  //hash的key采用String的序列化方式
-        redisTemplate.setValueSerializer(serializer);  //value序列化的方式采用jackson
-        redisTemplate.setHashValueSerializer(serializer);  //hash的value序列化采用jackson
+        redisTemplate.setValueSerializer(jacksonSerializer);  //value序列化的方式采用jackson
+        redisTemplate.setHashValueSerializer(jacksonSerializer);  //hash的value序列化采用jackson
         redisTemplate.afterPropertiesSet();
 
         return redisTemplate;
