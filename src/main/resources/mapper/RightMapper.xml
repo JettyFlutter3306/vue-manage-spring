@@ -3,8 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.element.mapper.RightMapper">
-    <resultMap type="cn.element.pojo.permission.Right" id="baseMapper">
+<mapper namespace="cn.element.manage.mapper.RightMapper">
+    <resultMap type="cn.element.manage.pojo.permission.Right" id="baseMapper">
         <id column="id" property="id"/>
         <result column="right_name" property="rightName"/>
         <result column="parent_id" property="parentId"/>
@@ -31,7 +31,7 @@
             role_id = #{roleId}
     </delete>
 
-    <select id="selectRightListByRoleId" resultType="cn.element.pojo.permission.Right">
+    <select id="selectRightListByRoleId" resultType="cn.element.manage.pojo.permission.Right">
         select
             a.id,
             a.right_name,
@@ -48,7 +48,7 @@
             b.role_id = #{roleId}
     </select>
 
-    <select id="selectRightListByUID" resultType="cn.element.pojo.permission.Right">
+    <select id="selectRightListByUID" resultType="cn.element.manage.pojo.permission.Right">
         select
             *
         from

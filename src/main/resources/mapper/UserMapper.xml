@@ -3,20 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.element.mapper.UserMapper">
-    <resultMap type="cn.element.pojo.permission.User" id="baseMapper">
+<mapper namespace="cn.element.manage.mapper.UserMapper">
+    <resultMap type="cn.element.manage.pojo.permission.User" id="baseMapper">
         <id column="id" property="id"/>
         <collection
                 property="roleList"
                 javaType="java.util.ArrayList"
-                ofType="cn.element.pojo.permission.Role"
-                select="cn.element.mapper.UserMapper.selectRoleListByUid"
+                ofType="cn.element.manage.pojo.permission.Role"
+                select="cn.element.manage.mapper.UserMapper.selectRoleListByUid"
                 column="user_id = id"
         >
         </collection>
     </resultMap>
 
-    <select id="selectRoleListByUid" resultType="cn.element.pojo.permission.Role">
+    <select id="selectRoleListByUid" resultType="cn.element.manage.pojo.permission.Role">
         select
             a.role_name
         from
