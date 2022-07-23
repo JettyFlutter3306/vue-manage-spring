@@ -13,13 +13,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 public class MyBatisPlusConfig {
 
-    //分页插件
+    // 分页插件
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         return new PaginationInterceptor();
     }
 
-//    SQL执行效率插件
+    // SQL执行效率插件
     @Bean
     @Profile({"dev","test"}) //设置dev test环境开启,保证我们的效率
     public PerformanceInterceptor performanceInterceptor() {

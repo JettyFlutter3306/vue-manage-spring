@@ -8,12 +8,12 @@ import java.util.Date;
 
 public class JwtUtil {
 
-    //授权签名,尽量随便写
+    // 授权签名,尽量随便写
     public static final String TOKEN = "TOKEN@WEIisnasa.cn";
 
     public static final String HEADER = "Authorization";
 
-    public static final Integer EXPIRED_TIME = 24 * 60 * 60;  //过期时间,单位秒
+    public static final Integer EXPIRED_TIME = 24 * 60 * 60;  // 过期时间,单位秒
 
     // 生成jwt
     public static String getToken(String username) {
@@ -49,8 +49,4 @@ public class JwtUtil {
     public static boolean isTokenExpired(Claims claims) {
         return claims.getExpiration().before(new Date());
     }
-
-
-
-
 }

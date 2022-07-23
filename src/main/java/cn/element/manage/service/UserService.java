@@ -2,6 +2,7 @@ package cn.element.manage.service;
 
 import cn.element.manage.pojo.permission.User;
 import cn.element.manage.mapper.UserMapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,12 +17,12 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    //分页查询用户列表
+    /**
+     * 分页查询用户列表
+     */
     public Page<User> getUserList(String keyword, Integer pageNum, Integer pageSize) {
         Page<User> page = new Page<>(pageNum, pageSize);
-
         List<User> userList = userMapper.selectUserList(keyword, (pageNum - 1) * pageSize, pageSize);
-
         Integer count = userMapper.selectCount(null);
 
         page.setRecords(userList)
@@ -30,7 +31,6 @@ public class UserService {
         return page;
     }
 
-    //添加一个用户
     @Transactional
     public boolean addUser(User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -40,7 +40,6 @@ public class UserService {
         return i != -1;
     }
 
-    //根据用户id删除用户
     @Transactional
     public boolean deleteUserById(Integer id) {
         int i = userMapper.deleteById(id);
@@ -51,7 +50,6 @@ public class UserService {
         return userMapper.selectById(id);
     }
 
-    //根据id修改用户的状态
     @Transactional
     public boolean editUserStatus(Integer id, Integer status) {
         switch (status) {
@@ -71,18 +69,24 @@ public class UserService {
         return i != -1;
     }
 
-    //根据id修改用户的信息
     @Transactional
     public boolean editUserInfoById(User user) {
         int i = userMapper.updateById(user);
         return i != -1;
     }
 
-    //分配角色
     @Transactional
     public boolean allotRoleByUserId(Integer userId, Integer roleId) {
         Integer i = userMapper.allotRoleByUserId(userId, roleId);
         return i != -1;
+    }
+
+    public User findUser(String username) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("username", username)
+               .eq("status", User.USER_STATUS_ON);
+
+        return userMapper.selectOne(wrapper);
     }
 
 }

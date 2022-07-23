@@ -22,11 +22,8 @@ public class TestUser {
      */
     @Test
     public void test01() {
-
         Page<User> page = userService.getUserList("", 1, 5);
-
         System.out.println(page.getTotal());
         page.getRecords().forEach(System.out::println);
-
     }
 }

@@ -40,7 +40,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         String token = request.getHeader(JwtUtil.HEADER);
 
         if (StringUtils.isEmpty(token)) {
-            chain.doFilter(request,response);
+            chain.doFilter(request, response);
             return;
         }
 
@@ -55,13 +55,13 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         }
 
         String username = claim.getSubject();
-        log.info("用户---{},正在登录!",username);
+        log.info("用户---{},正在登录!", username);
 
-        //获取用户信息
+        // 获取用户信息
         Collection<? extends GrantedAuthority> authorities = SecurityUtil.getCurrentUserAuth().getAuthorities();
         UsernamePasswordAuthenticationToken uPToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(uPToken);
 
-        chain.doFilter(request,response);  //放行
+        chain.doFilter(request, response);  // 放行
     }
 }

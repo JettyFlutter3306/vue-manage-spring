@@ -64,13 +64,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 白名单
      */
-    public static final String[] URL_WHITE_LIST = {"/", "/userLogin", "/logout"};
+    public static final String[] URL_WHITE_LIST = {"/", "/userLogin", "/logout", "/right/token"};
+    
+    public static final String[] SWAGGER_WHITELIST = {
+            "/swagger-ui.html",
+            "/swagger-ui/*",
+            "/swagger-resources/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/webjars/**"
+    };
 
     @Bean
     public JdbcTokenRepositoryImpl getJdbcTokenRepositoryImpl() {
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         jdbcTokenRepository.setDataSource(dataSource);
-
         return jdbcTokenRepository;
     }
 
@@ -87,12 +95,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
             .antMatchers(URL_WHITE_LIST).permitAll()
+            .antMatchers(SWAGGER_WHITELIST).permitAll()
             .anyRequest().authenticated()
             .and()
             .exceptionHandling()
             .authenticationEntryPoint(jwtAuthenticationEntryPoint)
             .and()
-            .addFilter(this.jwtAuthenticationFilter());
+            .addFilter(jwtAuthenticationFilter());
 
         http.formLogin()
             .usernameParameter("username")
@@ -106,7 +115,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.cors();
 
-        http.exceptionHandling()            //自定义权限不足处理器
+        http.exceptionHandling()            // 自定义权限不足处理器
             .accessDeniedHandler(accessDeniedHandler);
 
         http.addFilterAt(customizedAuthFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -116,7 +125,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 //
-        //从内存中读取
+        // 从内存中读取
 //        auth.inMemoryAuthentication()
 //                .passwordEncoder(encoder)
 //                .withUser("洛必达").password("{noop}123456")
@@ -129,7 +138,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected CustomizedAuthFilter customizedAuthFilter() throws Exception {
         CustomizedAuthFilter filter = new CustomizedAuthFilter();
         filter.setAuthenticationManager(authenticationManagerBean());
-
         return filter;
     }
 
