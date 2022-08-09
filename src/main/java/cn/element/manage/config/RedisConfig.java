@@ -1,11 +1,10 @@
 package cn.element.manage.config;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -13,25 +12,35 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfig {
 
-    //编写自定义的redisTemplate
     @Bean
-    public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<String,Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory);
+    public JedisConnectionFactory jedisConnectionFactory() {
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+        redisStandaloneConfiguration.setHostName("localhost");
+        redisStandaloneConfiguration.setDatabase(0);
+        redisStandaloneConfiguration.setPort(6379);
 
-        //配置具体的序列化方式
+        return new JedisConnectionFactory(redisStandaloneConfiguration);
+    }
+
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(JedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(connectionFactory);
+
+        // 配置具体的序列化方式
         Jackson2JsonRedisSerializer<Object> jacksonSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-//        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-//        serializer.setObjectMapper(objectMapper);
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
 
-        redisTemplate.setKeySerializer(stringRedisSerializer);  //key采用String序列化的方式
-        redisTemplate.setHashKeySerializer(stringRedisSerializer);  //hash的key采用String的序列化方式
-        redisTemplate.setValueSerializer(jacksonSerializer);  //value序列化的方式采用jackson
-        redisTemplate.setHashValueSerializer(jacksonSerializer);  //hash的value序列化采用jackson
+        /*
+         * key采用String序列化的方式
+         * value序列化的方式采用JSON
+         * hash的key采用String的序列化方式
+         * hash的value序列化采用JSON
+         */
+        redisTemplate.setKeySerializer(stringRedisSerializer);
+        redisTemplate.setValueSerializer(jacksonSerializer);
+        redisTemplate.setHashKeySerializer(stringRedisSerializer);
+        redisTemplate.setHashValueSerializer(jacksonSerializer);
         redisTemplate.afterPropertiesSet();
 
         return redisTemplate;

@@ -50,7 +50,6 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             ResultInfo resultInfo = ResultInfo.notLogin(Constant.NOT_LOGIN);
             JsonUtil.writeValueAsString(resultInfo, response);
-
             return;
         }
 
