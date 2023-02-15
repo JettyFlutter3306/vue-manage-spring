@@ -21,24 +21,20 @@ import java.io.IOException;
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-            throws IOException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws IOException {
         IUser myUser = (IUser) SecurityUtil.getCurrentPrinciple();
 
         String username = myUser.getUsername();
         String tokenName = JwtUtil.getToken(username);
 
-        ResultInfo resultInfo = ResultInfo.ok(
-                                    Constant.LOGIN_SUCCESS,
-                                    MapUtil.builder()
-                                           .put("username", myUser.getUsername())
-                                           .put("userId", myUser.getUserId())
-                                           .put("Authorization", tokenName).build()
-                                );
+        ResultInfo resultInfo = ResultInfo.ok(Constant.LOGIN_SUCCESS, MapUtil.builder()
+                                                                             .put("username", myUser.getUsername())
+                                                                             .put("userId", myUser.getUserId())
+                                                                             .put("Authorization", tokenName)
+                                                                             .build());
 
         JsonUtil.writeValueAsString(resultInfo, response);
         log.info("token --- {}", tokenName);
     }
-
-
 }

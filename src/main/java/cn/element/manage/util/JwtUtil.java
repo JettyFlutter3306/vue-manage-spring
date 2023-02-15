@@ -18,8 +18,7 @@ public class JwtUtil {
     // 生成jwt
     public static String getToken(String username) {
         Date nowDate = new Date();
-        Date expireDate = new Date(nowDate.getTime() + 1000 * EXPIRED_TIME);
-
+        Date expireDate = new Date(nowDate.getTime() + 1000L * EXPIRED_TIME);
         return Jwts.builder()
                    .setHeaderParam("typ", "JWT")
                    .setSubject(username)
@@ -34,10 +33,7 @@ public class JwtUtil {
      */
     public static Claims getClaimByToken(String jwt) {
         try {
-            return Jwts.parser()
-                       .setSigningKey(TOKEN)
-                       .parseClaimsJws(jwt)
-                       .getBody();
+            return Jwts.parser().setSigningKey(TOKEN).parseClaimsJws(jwt).getBody();
         } catch (Exception e) {
             return null;
         }
