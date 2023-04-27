@@ -33,8 +33,7 @@ public class RightService {
     public List<Right> getRightListAsTreeByUid(Integer uid) {
         String uMenuKey = Right.TREE_MENU_KEY + ":" + uid;
         if (Boolean.TRUE.equals(redisTemplate.hasKey(uMenuKey))) {
-            return redisTemplate.opsForList()
-                                .range(uMenuKey, 0, -1);
+            return redisTemplate.opsForList().range(uMenuKey, 0, -1);
         }
 
         List<Right> rightList = rightMapper.selectRightListByUID(uid);
@@ -71,7 +70,6 @@ public class RightService {
      * 根据角色的Id获取树形的权限列表
      * 以时间换空间,否则的话时间复杂度则是O(n²)
      * 这样一来时间复杂度就是O(n)
-     *
      * @param roleId 角色id
      */
     public List<Right> getRightListAsTree(Integer roleId) {
@@ -118,20 +116,18 @@ public class RightService {
         }
 
         // 过滤操作,父节点Id为0留下
-        return rightList.stream()
-                        .filter(s -> s.getParentId() == 0)
-                        .collect(Collectors.toList());
+        return rightList.stream().filter(s -> s.getParentId() == 0).collect(Collectors.toList());
     }
 
     /**
      * 根据权限Id获取它的所有的下级权限Id列表
-     *
      * @param rightId        需要查询的权限Id
      * @param childRightList 子节点的Id集合
      * @param rightIdList    用来对照的权限对象的Id和parentId
      * @return 返回所有子节点的Id集合
      */
-    public List<Integer> getCascadeListByRightId(Integer rightId, List<Integer> childRightList, List<Right> rightIdList) {
+    public List<Integer> getCascadeListByRightId(Integer rightId, List<Integer> childRightList,
+                                                 List<Right> rightIdList) {
         if (!childRightList.contains(rightId)) {
             childRightList.add(rightId);
         }
